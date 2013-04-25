@@ -23,6 +23,8 @@
 		AA72E1881720BB4600BBEBA4 /* RMTumblrSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E1871720BB4600BBEBA4 /* RMTumblrSDK.m */; };
 		AA72E18B1720BBC700BBEBA4 /* RMYelpSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E18A1720BBC700BBEBA4 /* RMYelpSDK.m */; };
 		AA8C4DF117289C430095D4EA /* RMTwitterSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */; };
+		AAD3681B1729E6EA0019FE51 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD3681A1729E6EA0019FE51 /* Social.framework */; };
+		AAD3681D1729E7B40019FE51 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD3681C1729E7B40019FE51 /* Accounts.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		AA72E18A1720BBC700BBEBA4 /* RMYelpSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMYelpSDK.m; sourceTree = "<group>"; };
 		AA8C4DEF17289C430095D4EA /* RMTwitterSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMTwitterSDK.h; sourceTree = "<group>"; };
 		AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMTwitterSDK.m; sourceTree = "<group>"; };
+		AAD3681A1729E6EA0019FE51 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		AAD3681C1729E7B40019FE51 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		D9614F5501E34EAF93E23A24 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -60,6 +64,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAD3681D1729E7B40019FE51 /* Accounts.framework in Frameworks */,
+				AAD3681B1729E6EA0019FE51 /* Social.framework in Frameworks */,
 				AA72E1571720B88100BBEBA4 /* UIKit.framework in Frameworks */,
 				AA72E1591720B88100BBEBA4 /* Foundation.framework in Frameworks */,
 				AA72E15B1720B88100BBEBA4 /* CoreGraphics.framework in Frameworks */,
@@ -91,6 +97,8 @@
 		AA72E1551720B88100BBEBA4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AAD3681C1729E7B40019FE51 /* Accounts.framework */,
+				AAD3681A1729E6EA0019FE51 /* Social.framework */,
 				AA72E1561720B88100BBEBA4 /* UIKit.framework */,
 				AA72E1581720B88100BBEBA4 /* Foundation.framework */,
 				AA72E15A1720B88100BBEBA4 /* CoreGraphics.framework */,

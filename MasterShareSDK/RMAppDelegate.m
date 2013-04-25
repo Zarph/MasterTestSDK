@@ -8,14 +8,20 @@
 
 #import "RMAppDelegate.h"
 
+#import "RMMasterSDK.h"
+
 @implementation RMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [[RMMasterSDK TwitterSDK] fetchTimelineForUser:@"ram_g92"];
+
     return YES;
 }
 

@@ -15,11 +15,13 @@
 
 #import "RMYelpSDK.h"
 
+#import "RMTwitterSDK.h"
 @interface RMMasterSDK : NSObject
 
 +(RMTumblrSDK *) TumblrSDK;
 +(RMFoursquareSDK *) FoursquareSDK;
 +(RMInstagramSDK *) InstagramSDK;
 +(RMYelpSDK *) YelpSDK;
++(RMTwitterSDK *) TwitterSDK;
 
 @end

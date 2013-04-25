@@ -28,4 +28,9 @@
     
 }
 
++(RMTwitterSDK *) TwitterSDK{
+    return [RMTwitterSDK sharedClient];
+    
+}
+
 @end

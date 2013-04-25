@@ -6,14 +6,17 @@
 //  Copyright (c) 2013 Ramiro Guerrero. All rights reserved.
 //
 
-#import "AFOAuth1Client.h"
+#import <Social/Social.h>
+#import <Accounts/Accounts.h>
 
 @protocol TwitterDelegate <NSObject>
 
 
 @end
-@interface RMTwitterSDK : AFOAuth1Client
+
+@interface RMTwitterSDK : NSObject
 
 + (RMTwitterSDK *)sharedClient;
+- (void)fetchTimelineForUser:(NSString *)username;
 
 @end
