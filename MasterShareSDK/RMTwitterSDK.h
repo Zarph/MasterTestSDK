@@ -17,6 +17,6 @@
 @interface RMTwitterSDK : NSObject
 
 + (RMTwitterSDK *)sharedClient;
-- (void)fetchTimelineForUser:(NSString *)username;
+- (void)getNearbyPlacesWithLatitude:(NSString *)latitude AndLongitude:(NSString *)longitude;
 
 @end

@@ -52,7 +52,7 @@ static NSString * const kTokenSecretString = @"";//FILL IN WITH YOUR OWN TOKEN S
 
 //METHODS
 
-- (void)fetchTimelineForUser:(NSString *)username
+- (void)getNearbyPlacesWithLatitude:(NSString *)latitude AndLongitude:(NSString *)longitude AndWithDelegate:(id <TwitterDelegate> *)delegate
 {
     //  Step 0: Check that the user has local Twitter accounts
     if ([self userHasAccessToTwitter]) {
@@ -69,12 +69,10 @@ static NSString * const kTokenSecretString = @"";//FILL IN WITH YOUR OWN TOKEN S
                  //  Step 2:  Create a request
                  NSArray *twitterAccounts =
                  [self.accountStore accountsWithAccountType:twitterAccountType];
-                 NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"
-                               @"/1.1/statuses/user_timeline.json"];
-                 NSDictionary *params = @{@"screen_name" : username,
-                                          @"include_rts" : @"0",
-                                          @"trim_user" : @"1",
-                                          @"count" : @"1"};
+                 NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/geo/search.json"];
+                 NSDictionary *params = @{@"lat" : latitude,
+                                          @"long" : longitude,
+                                          };
                  SLRequest *request =
                  [SLRequest requestForServiceType:SLServiceTypeTwitter
                                     requestMethod:SLRequestMethodGET
@@ -98,6 +96,9 @@ static NSString * const kTokenSecretString = @"";//FILL IN WITH YOUR OWN TOKEN S
                              
                              if (timelineData) {
                                  NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
                              }
                              else {
                                  // Our JSON deserialization went awry
