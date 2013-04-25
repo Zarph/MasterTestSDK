@@ -52,7 +52,7 @@ static NSString * const kTokenSecretString = @"";//FILL IN WITH YOUR OWN TOKEN S
 
 //METHODS
 
-- (void)getNearbyPlacesWithLatitude:(NSString *)latitude AndLongitude:(NSString *)longitude AndWithDelegate:(id <TwitterDelegate> *)delegate
+- (void)getNearbyPlacesWithLatitude:(NSString *)latitude AndLongitude:(NSString *)longitude AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
 {
     //  Step 0: Check that the user has local Twitter accounts
     if ([self userHasAccessToTwitter]) {
