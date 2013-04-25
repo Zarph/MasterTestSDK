@@ -8,6 +8,12 @@
 
 #import "AFOAuth1Client.h"
 
+@protocol TwitterDelegate <NSObject>
+
+
+@end
 @interface RMTwitterSDK : AFOAuth1Client
+
++ (RMTwitterSDK *)sharedClient;
 
 @end

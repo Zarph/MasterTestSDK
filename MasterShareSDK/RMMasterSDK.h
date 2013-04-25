@@ -7,7 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RMFoursquareSDK.h"
+
+#import "RMTumblrSDK.h"
+
+#import "RMInstagramSDK.h"
+
+#import "RMYelpSDK.h"
 
 @interface RMMasterSDK : NSObject
+
++(RMTumblrSDK *) TumblrSDK;
++(RMFoursquareSDK *) FoursquareSDK;
++(RMInstagramSDK *) InstagramSDK;
++(RMYelpSDK *) YelpSDK;
 
 @end

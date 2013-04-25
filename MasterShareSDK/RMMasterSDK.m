@@ -10,4 +10,22 @@
 
 @implementation RMMasterSDK
 
++(RMTumblrSDK *) TumblrSDK{
+    return [RMTumblrSDK sharedClient];
+}
+
++(RMFoursquareSDK *) FoursquareSDK {
+    return [RMFoursquareSDK sharedClient];
+}
+
++(RMInstagramSDK *) InstagramSDK{
+    return [RMInstagramSDK sharedClient];
+    
+}
+
++(RMYelpSDK *) YelpSDK{
+    return [RMYelpSDK sharedClient];
+    
+}
+
 @end

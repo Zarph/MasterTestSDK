@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D5FD293F240430FB4AD6BA2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4024170EA0D044BFA9D6305C /* libPods.a */; };
 		AA72E1571720B88100BBEBA4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA72E1561720B88100BBEBA4 /* UIKit.framework */; };
 		AA72E1591720B88100BBEBA4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA72E1581720B88100BBEBA4 /* Foundation.framework */; };
 		AA72E15B1720B88100BBEBA4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA72E15A1720B88100BBEBA4 /* CoreGraphics.framework */; };
@@ -16,9 +17,16 @@
 		AA72E1691720B88100BBEBA4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AA72E1681720B88100BBEBA4 /* Default.png */; };
 		AA72E16B1720B88100BBEBA4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA72E16A1720B88100BBEBA4 /* Default@2x.png */; };
 		AA72E16D1720B88100BBEBA4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA72E16C1720B88100BBEBA4 /* Default-568h@2x.png */; };
+		AA72E17F1720B9BF00BBEBA4 /* RMFoursquareSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E17E1720B9BE00BBEBA4 /* RMFoursquareSDK.m */; };
+		AA72E1821720BA6B00BBEBA4 /* RMInstagramSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E1811720BA6A00BBEBA4 /* RMInstagramSDK.m */; };
+		AA72E1851720BAFC00BBEBA4 /* RMMasterSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E1841720BAFC00BBEBA4 /* RMMasterSDK.m */; };
+		AA72E1881720BB4600BBEBA4 /* RMTumblrSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E1871720BB4600BBEBA4 /* RMTumblrSDK.m */; };
+		AA72E18B1720BBC700BBEBA4 /* RMYelpSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E18A1720BBC700BBEBA4 /* RMYelpSDK.m */; };
+		AA8C4DF117289C430095D4EA /* RMTwitterSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4024170EA0D044BFA9D6305C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA72E1531720B88100BBEBA4 /* MasterShareSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterShareSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA72E1561720B88100BBEBA4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AA72E1581720B88100BBEBA4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -32,6 +40,19 @@
 		AA72E1681720B88100BBEBA4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		AA72E16A1720B88100BBEBA4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		AA72E16C1720B88100BBEBA4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		AA72E17D1720B9BE00BBEBA4 /* RMFoursquareSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMFoursquareSDK.h; sourceTree = "<group>"; };
+		AA72E17E1720B9BE00BBEBA4 /* RMFoursquareSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMFoursquareSDK.m; sourceTree = "<group>"; };
+		AA72E1801720BA6A00BBEBA4 /* RMInstagramSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMInstagramSDK.h; sourceTree = "<group>"; };
+		AA72E1811720BA6A00BBEBA4 /* RMInstagramSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMInstagramSDK.m; sourceTree = "<group>"; };
+		AA72E1831720BAFC00BBEBA4 /* RMMasterSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMMasterSDK.h; sourceTree = "<group>"; };
+		AA72E1841720BAFC00BBEBA4 /* RMMasterSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMMasterSDK.m; sourceTree = "<group>"; };
+		AA72E1861720BB4600BBEBA4 /* RMTumblrSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMTumblrSDK.h; sourceTree = "<group>"; };
+		AA72E1871720BB4600BBEBA4 /* RMTumblrSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMTumblrSDK.m; sourceTree = "<group>"; };
+		AA72E1891720BBC600BBEBA4 /* RMYelpSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMYelpSDK.h; sourceTree = "<group>"; };
+		AA72E18A1720BBC700BBEBA4 /* RMYelpSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMYelpSDK.m; sourceTree = "<group>"; };
+		AA8C4DEF17289C430095D4EA /* RMTwitterSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMTwitterSDK.h; sourceTree = "<group>"; };
+		AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMTwitterSDK.m; sourceTree = "<group>"; };
+		D9614F5501E34EAF93E23A24 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +63,7 @@
 				AA72E1571720B88100BBEBA4 /* UIKit.framework in Frameworks */,
 				AA72E1591720B88100BBEBA4 /* Foundation.framework in Frameworks */,
 				AA72E15B1720B88100BBEBA4 /* CoreGraphics.framework in Frameworks */,
+				6D5FD293F240430FB4AD6BA2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +76,7 @@
 				AA72E15C1720B88100BBEBA4 /* MasterShareSDK */,
 				AA72E1551720B88100BBEBA4 /* Frameworks */,
 				AA72E1541720B88100BBEBA4 /* Products */,
+				D9614F5501E34EAF93E23A24 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +94,7 @@
 				AA72E1561720B88100BBEBA4 /* UIKit.framework */,
 				AA72E1581720B88100BBEBA4 /* Foundation.framework */,
 				AA72E15A1720B88100BBEBA4 /* CoreGraphics.framework */,
+				4024170EA0D044BFA9D6305C /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -80,6 +104,18 @@
 			children = (
 				AA72E1651720B88100BBEBA4 /* RMAppDelegate.h */,
 				AA72E1661720B88100BBEBA4 /* RMAppDelegate.m */,
+				AA72E17D1720B9BE00BBEBA4 /* RMFoursquareSDK.h */,
+				AA72E17E1720B9BE00BBEBA4 /* RMFoursquareSDK.m */,
+				AA72E1801720BA6A00BBEBA4 /* RMInstagramSDK.h */,
+				AA72E1811720BA6A00BBEBA4 /* RMInstagramSDK.m */,
+				AA72E1831720BAFC00BBEBA4 /* RMMasterSDK.h */,
+				AA72E1841720BAFC00BBEBA4 /* RMMasterSDK.m */,
+				AA72E1861720BB4600BBEBA4 /* RMTumblrSDK.h */,
+				AA72E1871720BB4600BBEBA4 /* RMTumblrSDK.m */,
+				AA72E1891720BBC600BBEBA4 /* RMYelpSDK.h */,
+				AA72E18A1720BBC700BBEBA4 /* RMYelpSDK.m */,
+				AA8C4DEF17289C430095D4EA /* RMTwitterSDK.h */,
+				AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */,
 				AA72E15D1720B88100BBEBA4 /* Supporting Files */,
 			);
 			path = MasterShareSDK;
@@ -109,6 +145,7 @@
 				AA72E14F1720B88100BBEBA4 /* Sources */,
 				AA72E1501720B88100BBEBA4 /* Frameworks */,
 				AA72E1511720B88100BBEBA4 /* Resources */,
+				39068D7332D34DE89FBA8A6D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -160,6 +197,23 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		39068D7332D34DE89FBA8A6D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AA72E14F1720B88100BBEBA4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -167,6 +221,12 @@
 			files = (
 				AA72E1631720B88100BBEBA4 /* main.m in Sources */,
 				AA72E1671720B88100BBEBA4 /* RMAppDelegate.m in Sources */,
+				AA72E17F1720B9BF00BBEBA4 /* RMFoursquareSDK.m in Sources */,
+				AA72E1821720BA6B00BBEBA4 /* RMInstagramSDK.m in Sources */,
+				AA72E1851720BAFC00BBEBA4 /* RMMasterSDK.m in Sources */,
+				AA72E1881720BB4600BBEBA4 /* RMTumblrSDK.m in Sources */,
+				AA72E18B1720BBC700BBEBA4 /* RMYelpSDK.m in Sources */,
+				AA8C4DF117289C430095D4EA /* RMTwitterSDK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +302,7 @@
 		};
 		AA72E1711720B88100BBEBA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D9614F5501E34EAF93E23A24 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MasterShareSDK/MasterShareSDK-Prefix.pch";
@@ -253,6 +314,7 @@
 		};
 		AA72E1721720B88100BBEBA4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D9614F5501E34EAF93E23A24 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MasterShareSDK/MasterShareSDK-Prefix.pch";
@@ -281,6 +343,7 @@
 				AA72E1721720B88100BBEBA4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
