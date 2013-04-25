@@ -22,7 +22,7 @@
     
     //[[RMMasterSDK TwitterSDK] fetchTimelineForUser:@"ram_g92"];
     
-    [[RMMasterSDK TwitterSDK] getNearbyPlacesWithLatitude:@"57.000000" AndLongitude:@"-122.000000"];
+    [[RMMasterSDK TwitterSDK] getNearbyPlacesWithLatitude:@"57.000000" AndLongitude:@"-122.000000" AndWithDelegate:nil];
     return YES;
 }
 

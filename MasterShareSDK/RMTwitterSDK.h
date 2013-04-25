@@ -17,6 +17,6 @@
 @interface RMTwitterSDK : NSObject
 
 + (RMTwitterSDK *)sharedClient;
-- (void)getNearbyPlacesWithLatitude:(NSString *)latitude AndLongitude:(NSString *)longitude;
+- (void)getNearbyPlacesWithLatitude:(NSString *)latitude AndLongitude:(NSString *)longitude AndWithDelegate:(id <TwitterDelegate> *)delegate;
 
 @end
