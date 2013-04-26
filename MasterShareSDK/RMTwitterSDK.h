@@ -17,7 +17,6 @@
 @interface RMTwitterSDK : NSObject
 
 + (RMTwitterSDK *)sharedClient;
-- (void)getNearbyPlacesWithLatitude:(NSString *)latitude AndLongitude:(NSString *)longitude AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
 
 //TIMELINES
 //You can pass as Resource Path: mentions_timeline, user_timeline, home_timeline, retweets_of_me.
