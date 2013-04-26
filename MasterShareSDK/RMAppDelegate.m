@@ -154,7 +154,35 @@
     [[RMMasterSDK TwitterSDK] getHelpApplicationRateLimitStatusWithResources:resourceList AndWithDelegate:nil]; */
     
     
+    /* NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"",
+     nil];*/
     
+    //[[RMMasterSDK TwitterSDK] getFriendsAndFollowersFriendshipsWithResourcePath:@"" AndParams:nil AndWithDelegate:nil];
+    
+    // [[RMMasterSDK TwitterSDK] getFriendsAndFollowersFollowersWithResourcePath:@"" AndParams:nil AndWithDelegate:nil];
+    
+    // [[RMMasterSDK TwitterSDK] getFriendsAndFollowersFriendsWithResourcePath:@"" AndParams:nil AndWithDelegate:nil];
+    
+    
+    //[[RMMasterSDK TwitterSDK] getUsersAccountWithResourcePath:@"" AndParams:nil AndWithDelegate:nil];
+    
+    //[[RMMasterSDK TwitterSDK] getUsersBlocksWithResourcePath:@"" AndParams:nil AndWithDelegate:nil];
+    
+    // [[RMMasterSDK TwitterSDK] getUsersSuggestionsMembersWithSlug:@"" AndParams:nil AndWithDelegate:nil];
+    
+    // [[RMMasterSDK TwitterSDK] getUsersSuggestionsWithParams:nil AndWithDelegate:nil];
+    
+    // [[RMMasterSDK TwitterSDK] getUsersSuggestionsWithSlug:@"" AndParams:nil AndWithDelegate:nil];
+    
+    //[[RMMasterSDK TwitterSDK] getUsersUsersWithResourcePath:@"" AndParams:param AndWithDelegate:nil];
+    
+    //[[RMMasterSDK TwitterSDK] postFriendsAndFollowersFriendshipsWithResourcePath:@"" AndParams:param AndWithDelegate:nil];
+    
+    //[[RMMasterSDK TwitterSDK] postUsersAccountWithResourcePath:@"" AndImage:[UIImage imageNamed:@""] AndParams:nil AndWithDelegate:nil];
+    
+    //[[RMMasterSDK TwitterSDK] postUsersAccountWithResourcePath:@"" AndParams:param AndWithDelegate:nil];
+    
+    //[[RMMasterSDK TwitterSDK] postUsersBlocksWithResourcePath:@"" AndParams:param AndWithDelegate:nil];
     
     
     return YES;

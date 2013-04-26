@@ -89,4 +89,53 @@
 //This next method has only one parameter: resourceList, which can be a comma separated list of resource families to get current the rate limits for. For example: statuses,friends,trends,help
 -(void)getHelpApplicationRateLimitStatusWithResources:(NSString *)resourceList AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
 
+
+//FRIENDS AND FOLLOWERS
+
+//You can pass as resource:
+//-Friendships: no_retweets/ids , lookup, incoming, outgoing, create, destroy, update, show
+//-Friends: ids, list
+//-Followers: ids, list
+
+- (void)getFriendsAndFollowersFriendshipsWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+- (void)postFriendsAndFollowersFriendshipsWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+- (void)getFriendsAndFollowersFriendsWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+- (void)getFriendsAndFollowersFollowersWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+
+//USERS
+
+//You can pass as resource:
+//-Account: settings, verify_credentials, update_delivery_device, update_profile, update_profile_background_image, update_profile_colors, update_profile_image, remove_profile_banner, update_profile_banner
+//-Blocks: list, ids, create, destroy
+//-Users: lookup, show, search, contributees, contributors, profile_banner
+
+- (void)getUsersAccountWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+- (void)postUsersAccountWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+- (void)getUsersBlocksWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+- (void)postUsersBlocksWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+- (void)getUsersUsersWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+- (void)postUsersAccountWithResourcePath:(NSString *)resource AndImage:(UIImage *)image AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+//- (void)postUsersAccountWithResourcePath:(NSString *)resource AndBanner:(UIImage *)banner AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+//SUGGESTED USERS
+
+- (void)getUsersSuggestionsWithSlug:(NSString *)slug AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+- (void)getUsersSuggestionsWithParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+- (void)getUsersSuggestionsMembersWithSlug:(NSString *)slug AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+
+//STREAMING
+/*
+ //You can pass as resource: filter, sample, firehose
+ - (void)getStreamingResourceWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+ - (void)postStreamingResourceWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+ - (void)getStreamingUserWithParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+ - (void)getStreamingSiteWithParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+ 
+ //DIRECT MESSAGES
+ 
+ //You can pass as resource: sent, show, destroy, new
+ - (void)getDirectMessagesWithParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+ - (void)getDirectMessagesResourceWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+ - (void)postDirectMessagesResourceWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate;
+ */
+
 @end

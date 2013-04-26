@@ -1222,4 +1222,1417 @@
 
 }
 
+#pragma mark - STREAMING Methods
+
+- (void)getStreamingResourceWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://stream.twitter.com/1.1/statuses/%@.json", resource]];
+                 
+                 NSLog(@"URL %@", url);
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)postStreamingResourceWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://stream.twitter.com/1.1/statuses/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodPOST
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)getStreamingUserWithParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://userstream.twitter.com/1.1/user.json"]];
+                 
+                 NSLog(@"URL %@", url);
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)getStreamingSiteWithParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://sitestream.twitter.com/1.1/site.json"]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+#pragma mark - DIRECT MESSAGE Methods
+
+- (void)getDirectMessagesWithParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/direct_messages.json"]];
+                 
+                 NSLog(@"URL %@", url);
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)getDirectMessagesResourceWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/direct_messages/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)postDirectMessagesResourceWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/direct_messages/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodPOST
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+#pragma mark - FRIENDS & FOLLOWERS Methods
+
+- (void)getFriendsAndFollowersFriendshipsWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/friendships/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)postFriendsAndFollowersFriendshipsWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/friendships/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodPOST
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)getFriendsAndFollowersFriendsWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/friends/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)getFriendsAndFollowersFollowersWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/followers/%@.json", resource]];
+                 
+                 NSLog(@"URL : %@", url);
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+#pragma mark - USERS Methods
+
+- (void)getUsersAccountWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/account/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)postUsersAccountWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/account/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodPOST
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)postUsersAccountWithResourcePath:(NSString *)resource AndImage:(UIImage *)image AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/account/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodPOST
+                                              URL:url
+                                       parameters:params];
+                 
+                 NSData *imageData = UIImageJPEGRepresentation(image, 0.7);
+                 
+                 [request addMultipartData:imageData withName:@"image" type:@"image/jpeg" filename:@"filename"];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)postUsersAccountWithResourcePath:(NSString *)resource AndBanner:(UIImage *)banner AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/account/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodPOST
+                                              URL:url
+                                       parameters:params];
+                 
+                 NSData *imageData = UIImageJPEGRepresentation(banner, 0.7);
+                 
+                 [request addMultipartData:imageData withName:@"banner" type:@"image/jpeg" filename:@"filename"];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)getUsersBlocksWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/blocks/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)postUsersBlocksWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/blocks/%@.json", resource]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodPOST
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)getUsersUsersWithResourcePath:(NSString *)resource AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/users/%@.json", resource]];
+                 
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+#pragma mark - SUGGESTED USERS Methods
+
+- (void)getUsersSuggestionsWithSlug:(NSString *)slug AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/users/suggestions/%@.json", slug]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)getUsersSuggestionsWithParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/users/suggestions.json"]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+- (void)getUsersSuggestionsMembersWithSlug:(NSString *)slug AndParams:(NSDictionary *)params AndWithDelegate:(NSObject <TwitterDelegate> *)delegate
+{
+    //  Step 0: Check that the user has local Twitter accounts
+    if ([self userHasAccessToTwitter]) {
+        
+        //  Step 1:  Obtain access to the user's Twitter accounts
+        ACAccountType *twitterAccountType = [self.accountStore
+                                             accountTypeWithAccountTypeIdentifier:
+                                             ACAccountTypeIdentifierTwitter];
+        [self.accountStore
+         requestAccessToAccountsWithType:twitterAccountType
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+             if (granted) {
+                 //  Step 2:  Create a request
+                 NSArray *twitterAccounts =
+                 [self.accountStore accountsWithAccountType:twitterAccountType];
+                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/1.1/users/suggestions/%@/members.json", slug]];
+                 
+                 SLRequest *request =
+                 [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                    requestMethod:SLRequestMethodGET
+                                              URL:url
+                                       parameters:params];
+                 
+                 //  Attach an account to the request
+                 [request setAccount:[twitterAccounts lastObject]];
+                 
+                 //  Step 3:  Execute the request
+                 [request performRequestWithHandler:^(NSData *responseData,
+                                                      NSHTTPURLResponse *urlResponse,
+                                                      NSError *error) {
+                     if (responseData) {
+                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                             NSError *jsonError;
+                             NSDictionary *timelineData =
+                             [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:NSJSONReadingAllowFragments error:&jsonError];
+                             
+                             if (timelineData) {
+                                 NSLog(@"Timeline Response: %@\n", timelineData);
+                                 
+                                 
+                                 //CALL THE DELEGATE METHOD
+                             }
+                             else {
+                                 // Our JSON deserialization went awry
+                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
+                             }
+                         }
+                         else {
+                             // The server did not respond successfully... were we rate-limited?
+                             NSLog(@"The response status code is %d", urlResponse.statusCode);
+                         }
+                     }
+                 }];
+             }
+             else {
+                 // Access was not granted, or an error occurred
+                 NSLog(@"%@", [error localizedDescription]);
+             }
+         }];
+    }
+}
+
+
 @end
