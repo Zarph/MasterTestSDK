@@ -20,9 +20,143 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    //[[RMMasterSDK TwitterSDK] fetchTimelineForUser:@"ram_g92"];
+       
+    //TWITTER SDK, test the methods by commenting/uncommenting the following lines:
     
-    [[RMMasterSDK TwitterSDK] getNearbyPlacesWithLatitude:@"57.000000" AndLongitude:@"-122.000000" AndWithDelegate:nil];
+    //TIMELINES TESTS:
+    //[[RMMasterSDK TwitterSDK] getTimelinesResourceWithResourcePath:@"mentions_timeline" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK TwitterSDK] getTimelinesResourceWithResourcePath:@"user_timeline" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK TwitterSDK] getTimelinesResourceWithResourcePath:@"home_timeline" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK TwitterSDK] getTimelinesResourceWithResourcePath:@"retweets_of_me" AndParameters:nil AndWithDelegate:nil];
+    
+    //TWEETS TESTS:
+    //[[RMMasterSDK TwitterSDK] getTweetsResourceWithResourcePath:@"retweets" AndID:@"21947795900469248" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK TwitterSDK] getTweetsResourceWithResourcePath:@"show" AndID:@"210462857140252672" AndParameters:nil AndWithDelegate:nil];
+    /* NSDictionary *params = @{ @"id" : @"240192632003911681" };
+    [[RMMasterSDK TwitterSDK] getTweetsResourceWithResourcePath:@"oembed" AndID:nil AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"status" : @"Blablabla" };
+    [[RMMasterSDK TwitterSDK] postTweetsResourceWithResourcePath:@"update" AndID:nil AndParameters:params AndWithDelegate:nil]; */
+    //[[RMMasterSDK TwitterSDK] postTweetsResourceWithResourcePath:@"destroy" AndID:@"327837698964480000" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK TwitterSDK] postTweetsResourceWithResourcePath:@"retweet" AndID:@"241259202004267009" AndParameters:nil AndWithDelegate:nil];
+    /* UIImage *image = [UIImage imageNamed:@"watermelon.jpg"];
+    NSDictionary *params = @{ @"status" : @"Blablabla" };
+    [[RMMasterSDK TwitterSDK] postTweetsUpdateWithMedia:image AndParameters:params AndWithDelegate:nil]; */
+    
+    //SEARCH TESTS:
+    //[[RMMasterSDK TwitterSDK] getSearchTweetsWithQuery:@"ironman" AndParameters:nil AndWithDelegate:nil];
+    
+    //FAVORITES TESTS:
+    //[[RMMasterSDK TwitterSDK] getFavoritesListWithParameters:nil AndWithDelegate:nil];
+    /* NSDictionary *params = @{ @"id" : @"243138128959913986" };
+    [[RMMasterSDK TwitterSDK] postFavoritesWithResourcePath:@"create" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"id" : @"243138128959913986" };
+    [[RMMasterSDK TwitterSDK] postFavoritesWithResourcePath:@"destroy" AndParameters:params AndWithDelegate:nil]; */
+    
+    //LISTS TESTS:
+    //[[RMMasterSDK TwitterSDK] getListsWithResourcePath:@"list" AndParameters:nil AndWithDelegate:nil];
+    /* NSDictionary *params = @{ @"slug": @"team",
+                              @"owner_screen_name": @"twitter"};
+    [[RMMasterSDK TwitterSDK] getListsWithResourcePath:@"statuses" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"slug": @"team",
+                              @"owner_screen_name": @"twitter"};
+    [[RMMasterSDK TwitterSDK] getListsWithResourcePath:@"subscribers" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"slug": @"team",
+                              @"owner_screen_name": @"twitter",
+                              @"screen_name": @"episod"};
+    [[RMMasterSDK TwitterSDK] getListsWithResourcePath:@"subscribers/show" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"slug": @"team",
+                              @"owner_screen_name": @"twitter",
+                              @"screen_name": @"froginthevalley"};
+    [[RMMasterSDK TwitterSDK] getListsWithResourcePath:@"members/show" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"slug": @"team",
+                              @"owner_screen_name": @"twitterapi"};
+    [[RMMasterSDK TwitterSDK] getListsWithResourcePath:@"members" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"slug": @"team",
+                              @"owner_screen_name": @"twitter"};
+    [[RMMasterSDK TwitterSDK] getListsWithResourcePath:@"show" AndParameters:params AndWithDelegate:nil]; */
+    //[[RMMasterSDK TwitterSDK] getListsWithResourcePath:@"subscriptions" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK TwitterSDK] getListsWithResourcePath:@"ownerships" AndParameters:nil AndWithDelegate:nil];
+    /* NSDictionary *params = @{ @"name": @"Goonies",
+                              @"mode": @"public",
+                              @"description": @"Test list"};
+    [[RMMasterSDK TwitterSDK] postListsWithResourcePath:@"create" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"list_id": @"88883214",
+                              @"description": @"Updated description"};
+    [[RMMasterSDK TwitterSDK] postListsWithResourcePath:@"update" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"list_id": @"88883214",
+                              @"screen_name": @"ram_g92"};
+    [[RMMasterSDK TwitterSDK] postListsWithResourcePath:@"members/create" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"list_id": @"88883214",
+                              @"screen_name": @"rsarver,episod,jasoncosta,theseancook,kurrik,froginthevalley"};
+    [[RMMasterSDK TwitterSDK] postListsWithResourcePath:@"members/create_all" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"list_id": @"88883214",
+                              @"screen_name": @"ram_g92"};
+    [[RMMasterSDK TwitterSDK] postListsWithResourcePath:@"members/destroy" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"list_id": @"88883214",
+                              @"screen_name": @"rsarver,episod,jasoncosta,theseancook,kurrik,froginthevalley"};
+    [[RMMasterSDK TwitterSDK] postListsWithResourcePath:@"members/destroy_all" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"list_id": @"88883214"};
+    [[RMMasterSDK TwitterSDK] postListsWithResourcePath:@"subscribers/create" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"list_id": @"88883214"};
+    [[RMMasterSDK TwitterSDK] postListsWithResourcePath:@"subscribers/destroy" AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"list_id": @"88883214"};
+    [[RMMasterSDK TwitterSDK] postListsWithResourcePath:@"destroy" AndParameters:params AndWithDelegate:nil]; */
+    
+    //SAVED SEARCHES TESTS:
+    //[[RMMasterSDK TwitterSDK] getSavedSearchesWithResourcePath:@"list" AndID:nil AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK TwitterSDK] getSavedSearchesWithResourcePath:@"show" AndID:@"278764648" AndParameters:nil AndWithDelegate:nil];
+    /* NSDictionary *params = @{ @"query": @"sandwiches"};
+    [[RMMasterSDK TwitterSDK] postSavedSearchesWithResourcePath:@"create" AndID:nil AndParameters:params AndWithDelegate:nil]; */
+    //[[RMMasterSDK TwitterSDK] postSavedSearchesWithResourcePath:@"destroy" AndID:@"278764648" AndParameters:nil AndWithDelegate:nil];
+    
+    //PLACES & GEO TESTS:
+    //[[RMMasterSDK TwitterSDK] getPlacesAndGeoWithResourcePath:@"id" AndID:@"df51dec6f4ee2b2c" AndParameters:nil AndWithDelegate:nil];
+    /* NSDictionary *params = @{ @"lat": @"37.76893497",
+                              @"long": @"-122.42284884"};
+    [[RMMasterSDK TwitterSDK] getPlacesAndGeoWithResourcePath:@"reverse_geocode" AndID:nil AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"query": @"Toronto"};
+    [[RMMasterSDK TwitterSDK] getPlacesAndGeoWithResourcePath:@"search" AndID:nil AndParameters:params AndWithDelegate:nil]; */
+    /* NSDictionary *params = @{ @"lat": @"37",
+                              @"long": @"-122",
+                              @"name": @"Twitter HQ"};
+    [[RMMasterSDK TwitterSDK] getPlacesAndGeoWithResourcePath:@"similar_places" AndID:nil AndParameters:params AndWithDelegate:nil]; */
+    /*
+    //For this next method you should use the "similar_places" method and then pass to this method the token it returns.
+    //Example parameters, you should fill in with the appropiate ones:
+    NSDictionary *params = @{ @"lat": @"37.76893497",
+                              @"long": @"-122.42284884",
+                              @"token": @"36179c9bf78835898ebf521c1defd4be",
+                              @"contained_within": @"247f43d441defc03",
+                              @"name": @"Twitter HQ"};
+    [[RMMasterSDK TwitterSDK] postPlacesAndGeoPlaceWithParameters:params AndWithDelegate:nil]; */
+    
+    //TRENDS TESTS:
+    /* NSDictionary *params = @{ @"id": @"1"};
+    [[RMMasterSDK TwitterSDK] getTrendsWithResourcePath:@"place" AndParameters:params AndWithDelegate:nil]; */
+    //[[RMMasterSDK TwitterSDK] getTrendsWithResourcePath:@"available" AndParameters:nil AndWithDelegate:nil];
+    /* NSDictionary *params = @{ @"lat": @"37.781157",
+                              @"long": @"-122.400612831116"};
+    [[RMMasterSDK TwitterSDK] getTrendsWithResourcePath:@"closest" AndParameters:params AndWithDelegate:nil]; */
+    
+    //SPAM REPORTING TESTS:
+    /*
+    //Example parameters, you should fill in with the appropiate ones:
+    NSDictionary *params = @{ @"screen_name": @"noradio"};
+    [[RMMasterSDK TwitterSDK] postSpamReportingReportSpamWithParameters:params AndWithDelegate:nil]; */
+    
+    
+    //HELP TESTS:
+    //[[RMMasterSDK TwitterSDK] getHelpWithResourcePath:@"configuration" AndWithDelegate:nil];
+    //[[RMMasterSDK TwitterSDK] getHelpWithResourcePath:@"languages" AndWithDelegate:nil];
+    //[[RMMasterSDK TwitterSDK] getHelpWithResourcePath:@"privacy" AndWithDelegate:nil];
+    //[[RMMasterSDK TwitterSDK] getHelpWithResourcePath:@"tos" AndWithDelegate:nil];
+    /* NSString *resourceList = @"statuses,help,users,search";
+    [[RMMasterSDK TwitterSDK] getHelpApplicationRateLimitStatusWithResources:resourceList AndWithDelegate:nil]; */
+    
+    
+    
+    
+    
     return YES;
 }
 
