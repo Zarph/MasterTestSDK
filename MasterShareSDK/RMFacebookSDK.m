@@ -38,7 +38,7 @@
     }];
     
     
-   /* NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/oauth/access_token?client_id=%@&client_secret=%@&grant_type=%@", @"544372532268478", @"80561a517716a9210be6d6f7d88c12d0", @"client_credentials"]];
+   /* NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/oauth/access_token?client_id=%@&client_secret=%@&grant_type=%@", @"", @"", @"client_credentials"]];
     
     NSLog(@"%@", url);
     
