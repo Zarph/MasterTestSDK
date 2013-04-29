@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6D5FD293F240430FB4AD6BA2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4024170EA0D044BFA9D6305C /* libPods.a */; };
+		AA6A321E172F0BA0002893BD /* RMFacebookSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6A321D172F0BA0002893BD /* RMFacebookSDK.m */; };
 		AA72E1571720B88100BBEBA4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA72E1561720B88100BBEBA4 /* UIKit.framework */; };
 		AA72E1591720B88100BBEBA4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA72E1581720B88100BBEBA4 /* Foundation.framework */; };
 		AA72E15B1720B88100BBEBA4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA72E15A1720B88100BBEBA4 /* CoreGraphics.framework */; };
@@ -29,6 +30,8 @@
 
 /* Begin PBXFileReference section */
 		4024170EA0D044BFA9D6305C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA6A321C172F0BA0002893BD /* RMFacebookSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMFacebookSDK.h; sourceTree = "<group>"; };
+		AA6A321D172F0BA0002893BD /* RMFacebookSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMFacebookSDK.m; sourceTree = "<group>"; };
 		AA72E1531720B88100BBEBA4 /* MasterShareSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MasterShareSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA72E1561720B88100BBEBA4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AA72E1581720B88100BBEBA4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -124,6 +127,8 @@
 				AA72E18A1720BBC700BBEBA4 /* RMYelpSDK.m */,
 				AA8C4DEF17289C430095D4EA /* RMTwitterSDK.h */,
 				AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */,
+				AA6A321C172F0BA0002893BD /* RMFacebookSDK.h */,
+				AA6A321D172F0BA0002893BD /* RMFacebookSDK.m */,
 				AA72E15D1720B88100BBEBA4 /* Supporting Files */,
 			);
 			path = MasterShareSDK;
@@ -235,6 +240,7 @@
 				AA72E1881720BB4600BBEBA4 /* RMTumblrSDK.m in Sources */,
 				AA72E18B1720BBC700BBEBA4 /* RMYelpSDK.m in Sources */,
 				AA8C4DF117289C430095D4EA /* RMTwitterSDK.m in Sources */,
+				AA6A321E172F0BA0002893BD /* RMFacebookSDK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
