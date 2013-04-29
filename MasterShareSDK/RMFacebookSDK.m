@@ -138,4 +138,24 @@ static NSString * const kClientBaseURL = @"https://graph.facebook.com/";
     
 }
 
+-(void)getPublicGroupsWithQuery:(NSString *)query WithParams:(NSDictionary *)params AndWithDelegate:(NSObject <FacebookDelegate> *)delegate{
+    
+    NSString *path = [NSString stringWithFormat:@"%@search", kClientBaseURL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    
+    [parameters setValue:query forKey:@"q"];
+    [parameters setValue:@"group" forKey:@"type"];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Response Object: %@", responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+    
+}
+
 @end
