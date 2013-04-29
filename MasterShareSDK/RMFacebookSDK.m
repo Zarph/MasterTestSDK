@@ -8,6 +8,8 @@
 
 #import "RMFacebookSDK.h"
 
+static NSString * const kClientBaseURL = @"https://graph.facebook.com/";
+
 @implementation RMFacebookSDK
 
 + (RMFacebookSDK *)sharedClient {
@@ -15,7 +17,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-        _sharedClient = [[RMFacebookSDK alloc] init];
+        _sharedClient = [[RMFacebookSDK alloc] initWithBaseURL:[NSURL URLWithString:kClientBaseURL]];
         
     });
     
@@ -24,21 +26,24 @@
 
 -(void)authenticateApp{
     
-    NSString *path = @"https://graph.facebook.com/oauth/access_token";
+    NSString *path = [NSString stringWithFormat:@"%@oauth/access_token", kClientBaseURL];
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"client_id", @"", @"client_secret", @"client_credentials", @"grant_type", nil];
 
     [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"ResponseObject : %@", responseObject);
+        NSError *jsonError;
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:&jsonError];
+        NSLog(@"DATA : %@", data);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        NSLog(@"Error: %@", error);
         
     }];
     
     
-   /* NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/oauth/access_token?client_id=%@&client_secret=%@&grant_type=%@", @"544372532268478", @"80561a517716a9210be6d6f7d88c12d0", @"client_credentials"]];
+   /* NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/oauth/access_token?client_id=%@&client_secret=%@&grant_type=%@", @"", @"", @"client_credentials"]];
     
     NSLog(@"%@", url);
     
@@ -143,4 +148,5 @@
 }
 
 */
+
 @end
