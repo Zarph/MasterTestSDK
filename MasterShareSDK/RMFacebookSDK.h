@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <Social/Social.h>
+#import <Accounts/Accounts.h>
 
+@protocol FacebookDelegate <NSObject>
+
+
+@end
 @interface RMFacebookSDK : NSObject
 
 + (RMFacebookSDK *)sharedClient;
