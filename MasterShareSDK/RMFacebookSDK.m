@@ -17,12 +17,44 @@
         
         _sharedClient = [[RMFacebookSDK alloc] init];
         
-        
     });
     
     return _sharedClient;
 }
 
+-(void)authenticateApp{
+    
+    NSString *path = @"https://graph.facebook.com/oauth/access_token";
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"client_id", @"", @"client_secret", @"client_credentials", @"grant_type", nil];
+
+    [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"ResponseObject : %@", responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+    
+   /* NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/oauth/access_token?client_id=%@&client_secret=%@&grant_type=%@", @"544372532268478", @"80561a517716a9210be6d6f7d88c12d0", @"client_credentials"]];
+    
+    NSLog(@"%@", url);
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        
+        NSLog(@"YEP");
+        //NSLog(@"IP Address: %@", [JSON valueForKeyPath:@"origin"]);
+    } failure:nil];
+    
+    [operation start];*/
+    
+}
+
+/*
 - (id)init
 {
     self = [super init];
@@ -110,5 +142,5 @@
     
 }
 
-
+*/
 @end

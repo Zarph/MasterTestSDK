@@ -7,15 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Social/Social.h>
-#import <Accounts/Accounts.h>
+#import "AFNetworking.h"
 
 @protocol FacebookDelegate <NSObject>
 
-
 @end
-@interface RMFacebookSDK : NSObject
+
+@interface RMFacebookSDK : AFHTTPClient
+
 
 + (RMFacebookSDK *)sharedClient;
+-(void)authenticateApp;
 
 @end

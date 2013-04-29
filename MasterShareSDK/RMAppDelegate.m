@@ -10,6 +10,9 @@
 
 #import "RMMasterSDK.h"
 
+#import "RMViewController.h"
+
+
 @implementation RMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -17,10 +20,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
+    RMViewController *viewController = [[RMViewController alloc] init];
+    
+    self.window.rootViewController = viewController;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-       
     //TWITTER SDK, test the methods by commenting/uncommenting the following lines:
     
     //TIMELINES TESTS:
