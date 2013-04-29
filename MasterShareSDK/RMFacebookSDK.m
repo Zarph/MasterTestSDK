@@ -50,94 +50,92 @@ static NSString * const kClientBaseURL = @"https://graph.facebook.com/";
     
 }
 
-/*
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        _accountStore = [[ACAccountStore alloc] init];
-    }
-    return self;
+-(void)getPublicPageWithQuery:(NSString *)query WithParams:(NSDictionary *)params AndWithDelegate:(NSObject <FacebookDelegate> *)delegate{
+    
+    NSString *path = [NSString stringWithFormat:@"%@search", kClientBaseURL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    
+    [parameters setValue:query forKey:@"q"];
+    [parameters setValue:accessToken forKey:@"access_token"];
+    [parameters setValue:@"page" forKey:@"type"];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Response Object: %@", responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
 }
 
-- (BOOL)userHasAccessToFacebook
-{
-    return [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook];
-}
-
--(void)getBaseMethodWith:(NSString *)resourcePath AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<FacebookDelegate> *)delegate {
-    //  Step 0: Check that the user has local Twitter accounts
-    if ([self userHasAccessToFacebook]) {
+-(void)getPublicPlaceWithQuery:(NSString *)query WithParams:(NSDictionary *)params AndWithDelegate:(NSObject <FacebookDelegate> *)delegate{
+    
+    NSString *path = [NSString stringWithFormat:@"%@search", kClientBaseURL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    
+    [parameters setValue:query forKey:@"q"];
+    [parameters setValue:accessToken forKey:@"access_token"];
+    [parameters setValue:@"place" forKey:@"type"];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        //  Step 1:  Obtain access to the user's Twitter accounts
-        ACAccountType *facebookAccountType = [self.accountStore
-                                             accountTypeWithAccountTypeIdentifier:
-                                             ACAccountTypeIdentifierFacebook];
+        NSLog(@"Response Object: %@", responseObject);
         
-        // Specify App ID and permissions
-        NSDictionary *options = @{
-                                  ACFacebookAppIdKey: @"012345678912345",
-                                  ACFacebookPermissionsKey: @[@"publish_stream", @"publish_actions"],
-                                  ACFacebookAudeinceKey: ACFacebookAudienceFriends
-                                  };
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
         
-        [self.accountStore
-         requestAccessToAccountsWithType:facebookAccountType
-         options:options
-         completion:^(BOOL granted, NSError *error) {
-             if (granted) {
-                 //  Step 2:  Create a request
-                 NSArray *twitterAccounts =
-                 [self.accountStore accountsWithAccountType:twitterAccountType];
-                 NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@""]];
-                 SLRequest *request =
-                 [SLRequest requestForServiceType:SLServiceTypeFacebook
-                                    requestMethod:SLRequestMethodGET
-                                              URL:url
-                                       parameters:params];
-                 
-                 //  Attach an account to the request
-                 request.account = self.facebookAccount;
-                 
-                 //  Step 3:  Execute the request
-                 [request performRequestWithHandler:^(NSData *responseData,
-                                                      NSHTTPURLResponse *urlResponse,
-                                                      NSError *error) {
-                     if (responseData) {
-                         if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
-                             NSError *jsonError;
-                             NSDictionary *timelineData =
-                             [NSJSONSerialization
-                              JSONObjectWithData:responseData
-                              options:NSJSONReadingAllowFragments error:&jsonError];
-                             
-                             if (timelineData) {
-                                 NSLog(@" Response: %@\n", timelineData);
-                                 
-                                 
-                                 //CALL THE DELEGATE METHOD
-                             }
-                             else {
-                                 // Our JSON deserialization went awry
-                                 NSLog(@"JSON Error: %@", [jsonError localizedDescription]);
-                             }
-                         }
-                         else {
-                             // The server did not respond successfully... were we rate-limited?
-                             NSLog(@"The response status code is %d", urlResponse.statusCode);
-                         }
-                     }
-                 }];
-             }
-             else {
-                 // Access was not granted, or an error occurred
-                 NSLog(@"%@", [error localizedDescription]);
-             }
-         }];
-    }
+    }];
     
 }
 
-*/
+-(void)getPublicPlaceWithQuery:(NSString *)query WithLatitude:(NSString *)latitude WithLongitude:(NSString *)longitude WithParams:(NSDictionary *)params AndWithDelegate:(NSObject <FacebookDelegate> *)delegate{
+    
+    NSString *path = [NSString stringWithFormat:@"%@search", kClientBaseURL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    
+    [parameters setValue:query forKey:@"q"];
+    [parameters setValue:accessToken forKey:@"access_token"];
+    [parameters setValue:@"place" forKey:@"type"];
+    
+    NSString *coords = [NSString stringWithFormat:@"%@,%@", latitude, longitude];
+    
+    [parameters setValue:coords forKey:@"center"];
+
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Response Object: %@", responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+    
+}
+
+-(void)getPublicPostsWithQuery:(NSString *)query WithParams:(NSDictionary *)params AndWithDelegate:(NSObject <FacebookDelegate> *)delegate{
+    
+    NSString *path = [NSString stringWithFormat:@"%@search", kClientBaseURL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    
+    [parameters setValue:query forKey:@"q"];
+    [parameters setValue:accessToken forKey:@"access_token"];
+    [parameters setValue:@"post" forKey:@"type"];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Response Object: %@", responseObject);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+    
+}
 
 @end
