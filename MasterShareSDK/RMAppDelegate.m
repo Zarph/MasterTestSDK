@@ -198,7 +198,7 @@
     
     //[[RMMasterSDK TwitterSDK] postUsersBlocksWithResourcePath:@"" AndParams:param AndWithDelegate:nil];
     
-    [[RMMasterSDK FacebookSDK] authenticateApp];
+   // [[RMMasterSDK FacebookSDK] authenticateApp];
     
     return YES;
 }

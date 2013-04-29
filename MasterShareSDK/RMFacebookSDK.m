@@ -31,31 +31,22 @@ static NSString * const kClientBaseURL = @"https://graph.facebook.com/";
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"client_id", @"", @"client_secret", @"client_credentials", @"grant_type", nil];
 
     [self getPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                
+        NSRange access_token_range = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] rangeOfString:@"access_token="];
+        if (access_token_range.length > 0) {
+            int from_index = access_token_range.location + access_token_range.length;
+            NSString *access_token = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] substringFromIndex:from_index];
+            
+            accessToken = access_token;
+            
+        }
         
-        NSLog(@"ResponseObject : %@", responseObject);
-        NSError *jsonError;
-        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:&jsonError];
-        NSLog(@"DATA : %@", data);
+        NSLog(@"ACCESS TOKEN: %@", accessToken);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         
     }];
-    
-    
-   /* NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/oauth/access_token?client_id=%@&client_secret=%@&grant_type=%@", @"", @"", @"client_credentials"]];
-    
-    NSLog(@"%@", url);
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        
-        NSLog(@"YEP");
-        //NSLog(@"IP Address: %@", [JSON valueForKeyPath:@"origin"]);
-    } failure:nil];
-    
-    [operation start];*/
     
 }
 

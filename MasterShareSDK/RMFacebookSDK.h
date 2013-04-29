@@ -13,7 +13,9 @@
 
 @end
 
-@interface RMFacebookSDK : AFHTTPClient
+@interface RMFacebookSDK : AFHTTPClient {
+    NSString *accessToken;
+}
 
 
 + (RMFacebookSDK *)sharedClient;
