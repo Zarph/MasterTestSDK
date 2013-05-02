@@ -29,10 +29,10 @@
 
 #import "RMLinkdedInSDK.h"
 
-static NSString * const kOAuth2BaseURLString = @"";
-static NSString * const kServerAPIURL = @"";
-static NSString * const kClientIDString = @"";
-static NSString * const kClientSecretString = @"";
+static NSString * const kOAuth2BaseURLString = @"https://www.linkedin.com/uas/";
+static NSString * const kServerAPIURL = @"https://www.linkedin.com/uas/";
+static NSString * const kClientIDString = @"i1v2u6bu41lm";
+static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";
 
 @implementation RMLinkdedInSDK
 
@@ -58,11 +58,14 @@ static NSString * const kClientSecretString = @"";
 
 -(void)authenticate {
     
-    [self authenticateUsingOAuthWithPath:@"oauth2/authenticate" scope:nil redirectURI:@"lnkdin://authorize" success:^(AFOAuthCredential *credential) {
+    [self authenticateUsingOAuthWithPath:@"oauth2/authorization" scope:nil redirectURI:@"http://x-mastersharesdk://" success:^(AFOAuthCredential *credential) {
         
+        NSLog(@"SUCCESS");
         
     } failure:^(NSError *error) {
         
+        NSLog(@"FAILURE");
+
     }];
 }
 
@@ -76,9 +79,11 @@ static NSString * const kClientSecretString = @"";
     // [mutableParameters setObject:kAFOAuthClientCredentialsGrantType forKey:@"grant_type"];
     //[mutableParameters setValue:scope forKey:@"scope"];
     [mutableParameters setValue:uri forKey:@"redirect_uri"];
-    [mutableParameters setValue:@"token" forKey:@"response_type"];
+    [mutableParameters setValue:@"code" forKey:@"response_type"];
+    [mutableParameters setValue:@"DCWERFWF45453sdffef592" forKey:@"state"];
+   // [mutableParameters setValue:kClientIDString forKey:@"client_id"];
+
     //[mutableParameters setValue:@"authorization_code" forKey:@"grant_type"];
-    //[mutableParameters setValue:kClientSecretString forKey:@"client_secret"];
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
     [self authenticateUsingOAuthWithPath:path parameters:parameters success:success failure:failure];

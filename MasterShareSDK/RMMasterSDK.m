@@ -37,4 +37,9 @@
     return [RMFacebookSDK sharedClient];
 }
 
++(RMLinkdedInSDK *) LinkdedInSDK{
+    return [RMLinkdedInSDK sharedClient];
+
+}
+
 @end

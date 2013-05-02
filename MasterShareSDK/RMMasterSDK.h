@@ -13,6 +13,7 @@
 #import "RMYelpSDK.h"
 #import "RMTwitterSDK.h"
 #import "RMFacebookSDK.h"
+#import "RMLinkdedInSDK.h"
 @interface RMMasterSDK : NSObject
 
 +(RMTumblrSDK *) TumblrSDK;
@@ -21,5 +22,6 @@
 +(RMYelpSDK *) YelpSDK;
 +(RMTwitterSDK *) TwitterSDK;
 +(RMFacebookSDK *) FacebookSDK;
++(RMLinkdedInSDK *) LinkdedInSDK;
 
 @end

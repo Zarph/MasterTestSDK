@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
     
+    [[RMMasterSDK LinkdedInSDK] authenticate];
+    
     //FACEBOOK SDK testing:
     //[[RMMasterSDK FacebookSDK] getPublicPageWithQuery:@"platform" WithParams:nil AndWithDelegate:nil];
     //[[RMMasterSDK FacebookSDK] getPublicPlaceWithQuery:@"coffee" WithParams:nil AndWithDelegate:nil];
