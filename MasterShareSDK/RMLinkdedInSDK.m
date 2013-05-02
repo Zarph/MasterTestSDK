@@ -32,7 +32,7 @@
 static NSString * const kOAuth2BaseURLString = @"https://www.linkedin.com/uas/";
 static NSString * const kServerAPIURL = @"https://www.linkedin.com/uas/";
 static NSString * const kClientIDString = @"i1v2u6bu41lm";
-static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";
+static NSString * const kClientSecretString = @"";
 
 @implementation RMLinkdedInSDK
 
