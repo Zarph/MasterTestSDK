@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2820B9C917331B6900583463 /* RMLinkdedInSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 2820B9C817331B6900583463 /* RMLinkdedInSDK.m */; };
 		6D5FD293F240430FB4AD6BA2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4024170EA0D044BFA9D6305C /* libPods.a */; };
 		AA6A321E172F0BA0002893BD /* RMFacebookSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6A321D172F0BA0002893BD /* RMFacebookSDK.m */; };
 		AA6A3221172F2129002893BD /* RMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6A3220172F2129002893BD /* RMViewController.m */; };
@@ -30,6 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2820B9C717331B6900583463 /* RMLinkdedInSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMLinkdedInSDK.h; sourceTree = "<group>"; };
+		2820B9C817331B6900583463 /* RMLinkdedInSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMLinkdedInSDK.m; sourceTree = "<group>"; };
 		4024170EA0D044BFA9D6305C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA6A321C172F0BA0002893BD /* RMFacebookSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMFacebookSDK.h; sourceTree = "<group>"; };
 		AA6A321D172F0BA0002893BD /* RMFacebookSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMFacebookSDK.m; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 				AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */,
 				AA6A321C172F0BA0002893BD /* RMFacebookSDK.h */,
 				AA6A321D172F0BA0002893BD /* RMFacebookSDK.m */,
+				2820B9C717331B6900583463 /* RMLinkdedInSDK.h */,
+				2820B9C817331B6900583463 /* RMLinkdedInSDK.m */,
 				AA72E15D1720B88100BBEBA4 /* Supporting Files */,
 			);
 			path = MasterShareSDK;
@@ -247,6 +252,7 @@
 				AA8C4DF117289C430095D4EA /* RMTwitterSDK.m in Sources */,
 				AA6A321E172F0BA0002893BD /* RMFacebookSDK.m in Sources */,
 				AA6A3221172F2129002893BD /* RMViewController.m in Sources */,
+				2820B9C917331B6900583463 /* RMLinkdedInSDK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
