@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RMMasterSDK.h"
 
-@interface RMViewController : UIViewController
+@interface RMViewController : UIViewController <DeviantArtDelegate>
 
 @end
