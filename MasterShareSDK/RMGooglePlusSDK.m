@@ -49,6 +49,7 @@ static NSString * const kGooglePlusAPIKey = @"AIzaSyCFuF7CgSX4m0yBjvzG25fUNtlz-J
 
 //PEOPLE RESOURCE - METHODS
 -(void)getPublicPeopleProfileWithUserId:(NSString *)userID AndWithDelegate:(NSObject<GooglePlusDelegate> *)delegate {
+   
     NSString *path = [NSString stringWithFormat:@"%@people/%@", kClientBaseURL, userID];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -71,6 +72,7 @@ static NSString * const kGooglePlusAPIKey = @"AIzaSyCFuF7CgSX4m0yBjvzG25fUNtlz-J
 
 
 -(void)getPeopleSearchWithQuery:(NSString *)query AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<GooglePlusDelegate> *)delegate {
+    
     NSString *path = [NSString stringWithFormat:@"%@people", kClientBaseURL];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
@@ -94,6 +96,7 @@ static NSString * const kGooglePlusAPIKey = @"AIzaSyCFuF7CgSX4m0yBjvzG25fUNtlz-J
 
 
 -(void)getPeopleListByActivityWithActivityId:(NSString *)activityID AndCollection:(NSString *)collection AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<GooglePlusDelegate> *)delegate {
+    
     NSString *path = [NSString stringWithFormat:@"%@activities/%@/people/%@", kClientBaseURL, activityID, collection];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
@@ -113,5 +116,117 @@ static NSString * const kGooglePlusAPIKey = @"AIzaSyCFuF7CgSX4m0yBjvzG25fUNtlz-J
     }];
 }
 
+
+//ACTIVITIES RESOURCE - METHODS
+-(void)getPublicActivitiesListWithUserId:(NSString *)userID AndCollection:(NSString *)collection AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<GooglePlusDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@people/%@/activities/%@", kClientBaseURL, userID, collection];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    
+    [parameters setValue:kGooglePlusAPIKey forKey:@"key"];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSError *jsonError;
+        NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:&jsonError];
+        NSLog(@"Response Object: %@", responseData);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+
+-(void)getActivityWithActivityId:(NSString *)activityID AndWithDelegate:(NSObject<GooglePlusDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@activities/%@", kClientBaseURL, activityID];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    [parameters setValue:kGooglePlusAPIKey forKey:@"key"];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSError *jsonError;
+        NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:&jsonError];
+        NSLog(@"Response Object: %@", responseData);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+}
+
+-(void)getActivitySearchWithQuery:(NSString *)query AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<GooglePlusDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@activities", kClientBaseURL];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    
+    [parameters setValue:kGooglePlusAPIKey forKey:@"key"];
+    [parameters setValue:query forKey:@"query"];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSError *jsonError;
+        NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:&jsonError];
+        NSLog(@"Response Object: %@", responseData);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+}
+
+
+//COMMENTS RESOURCE - METHODS
+-(void)getCommentsListWithActivityId:(NSString *)activityID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject<GooglePlusDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@activities/%@/comments", kClientBaseURL, activityID];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    
+    [parameters setValue:kGooglePlusAPIKey forKey:@"key"];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSError *jsonError;
+        NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:&jsonError];
+        NSLog(@"Response Object: %@", responseData);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+}
+
+
+-(void)getCommentWithCommentId:(NSString *)commentID AndWithDelegate:(NSObject<GooglePlusDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@comments/%@", kClientBaseURL, commentID];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    [parameters setValue:kGooglePlusAPIKey forKey:@"key"];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSError *jsonError;
+        NSDictionary *responseData = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:&jsonError];
+        NSLog(@"Response Object: %@", responseData);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+}
 
 @end

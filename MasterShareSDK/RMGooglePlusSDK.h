@@ -43,6 +43,15 @@
 -(void)getPublicPeopleProfileWithUserId:(NSString *)userID AndWithDelegate:(NSObject <GooglePlusDelegate> *)delegate;
 -(void)getPeopleSearchWithQuery:(NSString *)query AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <GooglePlusDelegate> *)delegate;
 -(void)getPeopleListByActivityWithActivityId:(NSString *)activityID AndCollection:(NSString *)collection AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <GooglePlusDelegate> *)delegate;
--(void)
+
+//ACTIVITIES RESOURCE
+-(void)getPublicActivitiesListWithUserId:(NSString *)userID AndCollection:(NSString *)collection AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <GooglePlusDelegate> *)delegate;
+-(void)getActivityWithActivityId:(NSString *)activityID AndWithDelegate:(NSObject <GooglePlusDelegate> *)delegate;
+-(void)getActivitySearchWithQuery:(NSString *)query AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <GooglePlusDelegate> *)delegate;
+
+//COMMENTS RESOURCE
+-(void)getCommentsListWithActivityId:(NSString *)activityID AndParameters:(NSDictionary *)params AndWithDelegate:(NSObject <GooglePlusDelegate> *)delegate;
+-(void)getCommentWithCommentId:(NSString *)commentID AndWithDelegate:(NSObject <GooglePlusDelegate> *)delegate;
+
 
 @end
