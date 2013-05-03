@@ -9,6 +9,8 @@
 #import "AFOAuth2Client.h"
 
 @protocol DeviantArtDelegate <NSObject>
+@optional
+-(void)performLoginFromHandle;
 
 @end
 
@@ -16,9 +18,12 @@
 
 @property (nonatomic, retain) NSDictionary *params;
 @property (nonatomic, retain) AFOAuthCredential *credential;
+@property (nonatomic, strong) NSObject <DeviantArtDelegate> *loginDelegate;
 
 + (RMDeviantArtSDK *)sharedClient;
 -(void)authenticate;
 - (BOOL)handleOpenURL:(NSURL *)url;
+
+
 
 @end

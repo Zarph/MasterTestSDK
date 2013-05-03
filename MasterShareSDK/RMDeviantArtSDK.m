@@ -12,7 +12,7 @@
 static NSString * const kOAuth2BaseURLString = @"https://www.deviantart.com/oauth2/draft10/";
 static NSString * const kServerAPIURL = @"https://www.deviantart.com/api/draft10/";
 static NSString * const kClientIDString = @"407";
-static NSString * const kClientSecretString = @"";
+static NSString * const kClientSecretString = @"a88a42d466e0870a8805877e2ffad1e0";
 
 @implementation RMDeviantArtSDK
 
@@ -132,8 +132,8 @@ static NSString * const kClientSecretString = @"";
     [[NSUserDefaults standardUserDefaults] setObject:self.credential.accessToken forKey:@"accessToken"];
 	[[NSUserDefaults standardUserDefaults] synchronize];
     
+    [_loginDelegate performLoginFromHandle];
     
-    //     [self igDidLogin:accessToken/* expirationDate:expirationDate*/];
     return YES;
     
 }
