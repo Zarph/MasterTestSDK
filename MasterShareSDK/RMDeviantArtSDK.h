@@ -24,6 +24,6 @@
 -(void)authenticate;
 - (BOOL)handleOpenURL:(NSURL *)url;
 
-
+-(void)refreshAccessToken;
 
 @end

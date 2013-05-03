@@ -118,14 +118,14 @@ static NSString * const kClientSecretString = @"a88a42d466e0870a8805877e2ffad1e0
             NSLog(@"Response: %@", json);
 
             NSString *accessToken = [json objectForKey:@"access_token"];
-           // NSString *refresh_token = [json objectForKey:@"refresh_token"];
-            //NSString *expires = [json objectForKey:@"expires_in"];
+            NSString *refresh_token = [json objectForKey:@"refresh_token"];
+            NSString *expires = [json objectForKey:@"expires_in"];
 
 
             if (accessToken)
             {
                 self.credential = [AFOAuthCredential credentialWithOAuthToken:accessToken tokenType:nil];
-                // [self.credential setRefreshToken:refresh_token expiration:[NSDate dateWithTimeIntervalSinceNow:[expires integerValue]]];
+                [self.credential setRefreshToken:refresh_token expiration:[NSDate dateWithTimeIntervalSinceNow:[expires integerValue]]];
                 
                 [AFOAuthCredential storeCredential:self.credential withIdentifier:self.serviceProviderIdentifier];
                 
@@ -163,5 +163,81 @@ static NSString * const kClientSecretString = @"a88a42d466e0870a8805877e2ffad1e0
 	}
     return params;
 }
+
+-(void)refreshAccessToken {
+    
+    NSString *accessToken = self.credential.accessToken;
+    NSLog(@"Access Token: %@", accessToken);
+    
+    NSString *refreshToken = self.credential.refreshToken;
+    
+    NSLog(@"Refresh Token: %@", refreshToken);
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:accessToken, @"access_token", nil];
+    
+    [self getPath:@"https://www.deviantart.com/api/draft10/placebo" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response: %@", json);
+        
+        NSString *status = [json objectForKey:@"status"];
+        
+        if ([status isEqualToString:@"success"]) {
+            NSLog(@"Access Token is still valid!");
+        }
+        else {
+            NSLog(@"Access Token is expired, getting new Access Token...");
+            
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"refresh_token",@"grant_type",
+                                    refreshToken, @"refresh_token",
+                                    kClientIDString, @"client_id",
+                                    kClientSecretString, @"client_secret", nil];
+            
+            [self getPath:@"https://www.deviantart.com/oauth2/draft10/token" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                
+                
+                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+                
+                NSLog(@"Response: %@", json);
+                
+                NSString *accessToken = [json objectForKey:@"access_token"];
+                NSString *refresh_token = [json objectForKey:@"refresh_token"];
+                NSString *expires = [json objectForKey:@"expires_in"];
+                
+                
+                if (accessToken)
+                {
+                    self.credential = [AFOAuthCredential credentialWithOAuthToken:accessToken tokenType:nil];
+                    [self.credential setRefreshToken:refresh_token expiration:[NSDate dateWithTimeIntervalSinceNow:[expires integerValue]]];
+                    
+                    [AFOAuthCredential storeCredential:self.credential withIdentifier:self.serviceProviderIdentifier];
+                    
+                    [self setAuthorizationHeaderWithCredential:self.credential];
+                    
+                    NSLog(@"ACCESS TOKEN: %@", self.credential.accessToken);
+                    
+                    //Store the accessToken on userDefaults
+                    [[NSUserDefaults standardUserDefaults] setObject:self.credential.accessToken forKey:@"accessToken"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+                
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                
+                NSLog(@"Failed to refresh Access Token. Error: %@", error);
+                
+            }];
+
+        }
+     
+                    
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+}
+
 
 @end
