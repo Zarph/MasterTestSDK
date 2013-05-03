@@ -9,9 +9,9 @@
 #import "RMDeviantArtSDK.h"
 #import "AFJSONRequestOperation.h"
 
-static NSString * const kOAuth2BaseURLString = @"";
-static NSString * const kServerAPIURL = @"";
-static NSString * const kClientIDString = @"";
+static NSString * const kOAuth2BaseURLString = @"https://www.deviantart.com/oauth2/draft10/";
+static NSString * const kServerAPIURL = @"https://www.deviantart.com/api/draft10/";
+static NSString * const kClientIDString = @"407";
 static NSString * const kClientSecretString = @"";
 
 @implementation RMDeviantArtSDK
@@ -36,7 +36,7 @@ static NSString * const kClientSecretString = @"";
 
 -(void)authenticate {
     
-    [self authenticateUsingOAuthWithPath:@"" scope:nil redirectURI:@"" success:^(AFOAuthCredential *credential) {
+    [self authenticateUsingOAuthWithPath:@"authorize" scope:nil redirectURI:@"dvntart://oauth2" success:^(AFOAuthCredential *credential) {
         
         
     } failure:^(NSError *error) {
@@ -54,7 +54,7 @@ static NSString * const kClientSecretString = @"";
     // [mutableParameters setObject:kAFOAuthClientCredentialsGrantType forKey:@"grant_type"];
     //[mutableParameters setValue:scope forKey:@"scope"];
     [mutableParameters setValue:uri forKey:@"redirect_uri"];
-    [mutableParameters setValue:@"token" forKey:@"response_type"];
+    [mutableParameters setValue:@"code" forKey:@"response_type"];
     //[mutableParameters setValue:@"authorization_code" forKey:@"grant_type"];
     //[mutableParameters setValue:kClientSecretString forKey:@"client_secret"];
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];

@@ -46,4 +46,7 @@
     return [RMGooglePlusSDK sharedClient];
 }
 
++(RMDeviantArtSDK *) DeviantArtSDK{
+    return [RMDeviantArtSDK sharedClient];
+}
 @end

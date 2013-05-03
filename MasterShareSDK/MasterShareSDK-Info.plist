@@ -25,7 +25,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>http://x-mastersharesdk://</string>
+				<string>dvntart://oauth2</string>
 			</array>
 		</dict>
 	</array>

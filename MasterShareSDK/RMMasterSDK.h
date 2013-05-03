@@ -15,7 +15,7 @@
 #import "RMFacebookSDK.h"
 #import "RMLinkdedInSDK.h"
 #import "RMGooglePlusSDK.h"
-
+#import "RMDeviantArtSDK.h"
 @interface RMMasterSDK : NSObject
 
 +(RMTumblrSDK *) TumblrSDK;
@@ -26,5 +26,6 @@
 +(RMFacebookSDK *) FacebookSDK;
 +(RMLinkdedInSDK *) LinkdedInSDK;
 +(RMGooglePlusSDK *) GooglePlusSDK;
++(RMDeviantArtSDK *) DeviantArtSDK;
 
 @end

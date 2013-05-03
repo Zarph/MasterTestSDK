@@ -230,11 +230,11 @@
 }
 
 -(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [[RMMasterSDK LinkdedInSDK] handleOpenURL:url];
+    return [[RMMasterSDK DeviantArtSDK] handleOpenURL:url];
 }
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [[RMMasterSDK LinkdedInSDK] handleOpenURL:url];
+    return [[RMMasterSDK DeviantArtSDK] handleOpenURL:url];
 }
 
 @end
