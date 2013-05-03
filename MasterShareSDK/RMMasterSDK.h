@@ -14,6 +14,8 @@
 #import "RMTwitterSDK.h"
 #import "RMFacebookSDK.h"
 #import "RMLinkdedInSDK.h"
+#import "RMGooglePlusSDK.h"
+
 @interface RMMasterSDK : NSObject
 
 +(RMTumblrSDK *) TumblrSDK;
@@ -23,5 +25,6 @@
 +(RMTwitterSDK *) TwitterSDK;
 +(RMFacebookSDK *) FacebookSDK;
 +(RMLinkdedInSDK *) LinkdedInSDK;
++(RMGooglePlusSDK *) GooglePlusSDK;
 
 @end

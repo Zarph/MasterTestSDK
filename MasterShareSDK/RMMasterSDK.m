@@ -42,4 +42,8 @@
 
 }
 
++(RMGooglePlusSDK *) GooglePlusSDK{
+    return [RMGooglePlusSDK sharedClient];
+}
+
 @end
