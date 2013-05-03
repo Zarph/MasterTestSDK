@@ -30,7 +30,7 @@
 #import "RMGooglePlusSDK.h"
 
 static NSString * const kClientBaseURL = @"https://www.googleapis.com/plus/v1/";
-static NSString * const kGooglePlusAPIKey = @"AIzaSyCFuF7CgSX4m0yBjvzG25fUNtlz-Jq4etU";//FILL IN WITH YOUR OWN API KEY
+static NSString * const kGooglePlusAPIKey = @"";//FILL IN WITH YOUR OWN API KEY
 
 @implementation RMGooglePlusSDK
 
