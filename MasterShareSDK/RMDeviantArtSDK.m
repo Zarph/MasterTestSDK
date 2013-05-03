@@ -38,6 +38,7 @@ static NSString * const kClientSecretString = @"a88a42d466e0870a8805877e2ffad1e0
     
     [self authenticateUsingOAuthWithPath:@"authorize" scope:nil redirectURI:@"dvntart://oauth2" success:^(AFOAuthCredential *credential) {
         
+        NSLog(@"Success ? ");
         
     } failure:^(NSError *error) {
         
@@ -87,54 +88,67 @@ static NSString * const kClientSecretString = @"a88a42d466e0870a8805877e2ffad1e0
 
 - (BOOL)handleOpenURL:(NSURL *)url{
     
-    NSString *query = [url fragment];
+
+    NSString *query = [NSString stringWithFormat:@"%@",url];
     if (!query) {
         query = [url query];
     }
-    NSLog(@"URL FRAGMENT: %@", [url fragment]);
     
     self.params = [self parseURLParams:query];
-    NSString *accessToken = [self.params valueForKey:@"access_token"];
+    
+    NSString *code = nil;
+
+    if ([self.params valueForKey:@"dvntart://oauth2?code"])
+         code = [self.params valueForKey:@"dvntart://oauth2?code"];
     
     
-    // If the URL doesn't contain the access token, an error has occurred.
-    if (!accessToken) {
-        //NSString *error = [self.params valueForKey:@"error"];
+    if (code)
+    {
         
-        NSString *errorReason = [self.params valueForKey:@"error_reason"];
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"authorization_code",@"grant_type",
+                                code,@"code",
+                                kClientIDString, @"client_id",
+                                kClientSecretString, @"client_secret", nil];
         
-        //   BOOL userDidCancel = [errorReason isEqualToString:@"user_denied"];
-        //     [self igDidNotLogin:userDidCancel];
+        [self getPath:@"https://www.deviantart.com/oauth2/draft10/token" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+            
+            NSLog(@"Response: %@", json);
+
+            NSString *accessToken = [json objectForKey:@"access_token"];
+           // NSString *refresh_token = [json objectForKey:@"refresh_token"];
+            //NSString *expires = [json objectForKey:@"expires_in"];
+
+
+            if (accessToken)
+            {
+                self.credential = [AFOAuthCredential credentialWithOAuthToken:accessToken tokenType:nil];
+                // [self.credential setRefreshToken:refresh_token expiration:[NSDate dateWithTimeIntervalSinceNow:[expires integerValue]]];
+                
+                [AFOAuthCredential storeCredential:self.credential withIdentifier:self.serviceProviderIdentifier];
+                
+                [self setAuthorizationHeaderWithCredential:self.credential];
+                
+                NSLog(@"ACCESS TOKEN: %@", self.credential.accessToken);
+                
+                //Store the accessToken on userDefaults
+                [[NSUserDefaults standardUserDefaults] setObject:self.credential.accessToken forKey:@"accessToken"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                [_loginDelegate performLoginFromHandle];
+            }
+
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+            
+        }];
         
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:errorReason
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Ok"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-        
-        return YES;
     }
     
-    NSString *refreshToken = [self.params  valueForKey:@"refresh_token"];
-    // refreshToken = refreshToken ? refreshToken : [parameters valueForKey:@"refresh_token"];
-    
-    self.credential = [AFOAuthCredential credentialWithOAuthToken:[self.params valueForKey:@"access_token"] tokenType:[self.params  valueForKey:@"token_type"]];
-    [self.credential setRefreshToken:refreshToken expiration:[NSDate dateWithTimeIntervalSinceNow:[[self.params  valueForKey:@"expires_in"] integerValue]]];
-    
-    [AFOAuthCredential storeCredential:self.credential withIdentifier:self.serviceProviderIdentifier];
-    
-    [self setAuthorizationHeaderWithCredential:self.credential];
-    
-    NSLog(@"ACCESS TOKEN: %@", self.credential.accessToken);
-    
-    //Store the accessToken on userDefaults
-    [[NSUserDefaults standardUserDefaults] setObject:self.credential.accessToken forKey:@"accessToken"];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [_loginDelegate performLoginFromHandle];
-    
-    return YES;
+        return YES;
     
 }
 
