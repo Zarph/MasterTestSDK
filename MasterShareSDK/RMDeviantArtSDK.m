@@ -11,8 +11,8 @@
 
 static NSString * const kOAuth2BaseURLString = @"https://www.deviantart.com/oauth2/draft10/";
 static NSString * const kServerAPIURL = @"https://www.deviantart.com/api/draft10/";
-static NSString * const kClientIDString = @"407";
-static NSString * const kClientSecretString = @"a88a42d466e0870a8805877e2ffad1e0";
+static NSString * const kClientIDString = @"";
+static NSString * const kClientSecretString = @"";
 
 @implementation RMDeviantArtSDK
 
@@ -235,6 +235,265 @@ static NSString * const kClientSecretString = @"a88a42d466e0870a8805877e2ffad1e0
                     
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+    }];
+    
+}
+
+#pragma mark - User Methods
+
+-(void)getUserInfoWithDelegate:(NSObject <DeviantArtDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@user/whoami", kServerAPIURL];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)getUserdAmnAuthTokenWithDelegate:(NSObject <DeviantArtDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@user/damntoken", kServerAPIURL];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+#pragma mark - Sta.sh methods
+
+-(void)postSubmitOnStaWithFile:(NSData *)uploadFile Parameters:(NSDictionary *)params AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@stash/submit", kServerAPIURL];
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:kServerAPIURL]];
+    NSMutableURLRequest *afRequest = [httpClient multipartFormRequestWithMethod:@"POST"
+                                                                           path:path
+                                                                     parameters:parameters
+                                                      constructingBodyWithBlock:^(id <AFMultipartFormData>formData)
+                                      {
+                                          [formData appendPartWithFileData:uploadFile
+                                                                      name:@"media"
+                                                                  fileName:@"asd"
+                                                                  mimeType:@"image/jpeg"];
+                                      }
+                                      ];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:afRequest];
+    
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        
+        NSLog(@"Sent %lld of %lld bytes", totalBytesWritten, totalBytesExpectedToWrite);
+        
+    }];
+    
+    [operation setCompletionBlock:^{
+        NSLog(@"%@", operation.responseString); //Gives a very scary warning
+    }];
+    
+    [operation start];
+}
+
+-(void)postDeleteOnStaWithStashId:(NSString *)stashid AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    [mutableParameters setValue:stashid forKey:@"stashid"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@stash/delete", kServerAPIURL];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)postMoveFileOnStaWithStashId:(NSString *)stashid Parameters:(NSDictionary *)params AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    [mutableParameters setValue:stashid forKey:@"stashid"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@stash/move", kServerAPIURL];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)postRenameFolderOnStaWithFolder:(NSString *)newFolder WithFolderId:(NSString *)folderId AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    [mutableParameters setValue:newFolder forKey:@"folder"];
+    [mutableParameters setValue:folderId forKey:@"folderid"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@stash/folder", kServerAPIURL];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)getAvailibleSpaceOnStaWithDelegate:(NSObject <DeviantArtDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@stash/space", kServerAPIURL];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"ERROR: %@", error);
+        
+    }];
+    
+}
+
+-(void)getListFoldersAndSubmissionsOnStaWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@stash/delta", kServerAPIURL];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+    
+}
+
+-(void)postFetchFolderAndSubmissionDataOnStaWithStashId:(NSString *)stashid WithFolderId:(NSString *)folderId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    [mutableParameters setValue:stashid forKey:@"stashid"];
+    [mutableParameters setValue:folderId forKey:@"folderid"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@stash/metadata", kServerAPIURL];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+    }];
+    
+}
+
+-(void)postFetchSubmissionMediaOnStaWithStashId:(NSString *)stashid AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    [mutableParameters setValue:stashid forKey:@"stashid"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"%@stash/media", kServerAPIURL];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);        //Complete with delegate call
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
     }];
     
 }

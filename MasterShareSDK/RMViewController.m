@@ -55,6 +55,24 @@
 
 -(void)performLoginFromHandle {
     
+    // NSData *dataToSEnd = UIImageJPEGRepresentation([UIImage imageNamed:@"asd.png"], 0.1);
+    
+    // [[RMMasterSDK DeviantArtSDK] postSubmitOnStaWithFile:dataToSEnd Parameters:[NSDictionary dictionaryWithObjectsAndKeys:@"Test", @"Title", nil] AndWithDelegate:nil];
+    
+    //[[RMMasterSDK DeviantArtSDK] postMoveFileOnStaWithStashId:@"4342586905948352" Parameters:nil AndWithDelegate:nil];
+    
+    // [[RMMasterSDK DeviantArtSDK] postRenameFolderOnStaWithFolder:@"New" WithFolderId:@"5615157401027624" AndWithDelegate:nil];
+    
+    // [[RMMasterSDK DeviantArtSDK] getAvailibleSpaceOnStaWithDelegate:nil];
+    
+    //  [[RMMasterSDK DeviantArtSDK] getListFoldersAndSubmissionsOnStaWithParameters:nil AndWithDelegate:nil];
+    
+    //[[RMMasterSDK DeviantArtSDK] postFetchFolderAndSubmissionDataOnStaWithStashId:@"5982545012521093" WithFolderId:@"6024923543342390" WithParameters:nil AndWithDelegate:nil];
+    
+    //[[RMMasterSDK DeviantArtSDK] postFetchSubmissionMediaOnStaWithStashId:@"5982545012521093" AndWithDelegate:nil];
+    
+    // [[RMMasterSDK DeviantArtSDK] postDeleteOnStaWithStashId:@"5982545012521093" AndWithDelegate:nil];
+    
 }
 
 @end

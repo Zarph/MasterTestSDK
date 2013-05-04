@@ -26,4 +26,16 @@
 
 -(void)refreshAccessToken;
 
+-(void)getUserInfoWithDelegate:(NSObject <DeviantArtDelegate> *)delegate;
+-(void)getUserdAmnAuthTokenWithDelegate:(NSObject <DeviantArtDelegate> *)delegate;
+-(void)postSubmitOnStaWithFile:(NSData *)uploadFile Parameters:(NSDictionary *)params AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate;
+-(void)postDeleteOnStaWithStashId:(NSString *)stashid AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate;
+-(void)postMoveFileOnStaWithStashId:(NSString *)stashid Parameters:(NSDictionary *)params AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate;
+-(void)postRenameFolderOnStaWithFolder:(NSString *)newFolder WithFolderId:(NSString *)folderId AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate;
+-(void)getAvailibleSpaceOnStaWithDelegate:(NSObject <DeviantArtDelegate> *)delegate;
+-(void)getListFoldersAndSubmissionsOnStaWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate;
+-(void)postFetchFolderAndSubmissionDataOnStaWithStashId:(NSString *)stashid WithFolderId:(NSString *)folderId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate; // Double-check this method
+-(void)postFetchSubmissionMediaOnStaWithStashId:(NSString *)stashid AndWithDelegate:(NSObject <DeviantArtDelegate> *)delegate;
+
+
 @end
