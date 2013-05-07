@@ -32,8 +32,8 @@
 
 static NSString * const kOAuth2BaseURLString = @"https://accounts.google.com/o/";
 static NSString * const kServerAPIURL = @"https://accounts.google.com/o/";
-static NSString * const kClientIDString = @"";
-static NSString * const kClientSecretString = @"";
+static NSString * const kClientIDString = @"753397185616-u3frsi5tm75muupdhb7srd1ha382f8dg.apps.googleusercontent.com";
+static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
 
 @implementation RMOrkutSDK
 
@@ -43,6 +43,7 @@ static NSString * const kClientSecretString = @"";
     dispatch_once(&onceToken, ^{
         NSURL *url = [NSURL URLWithString:kOAuth2BaseURLString];
         _sharedClient = [RMOrkutSDK clientWithBaseURL:url clientID:kClientIDString secret:kClientSecretString];
+        
         
         _sharedClient.credential = [AFOAuthCredential retrieveCredentialWithIdentifier:_sharedClient.serviceProviderIdentifier];
         if (_sharedClient.credential != nil) {
@@ -57,7 +58,7 @@ static NSString * const kClientSecretString = @"";
 
 -(void)authenticate {
     
-    [self authenticateUsingOAuthWithPath:@"oauth2/auth" scope:nil redirectURI:@"" success:^(AFOAuthCredential *credential) {
+    [self authenticateUsingOAuthWithPath:@"oauth2/auth" scope:@"https://www.googleapis.com/auth/plus.login" redirectURI:@"urn:ietf:wg:oauth:2.0:oob" success:^(AFOAuthCredential *credential) {
         
         NSLog(@"Success ? ");
         
@@ -74,7 +75,7 @@ static NSString * const kClientSecretString = @"";
 {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
     // [mutableParameters setObject:kAFOAuthClientCredentialsGrantType forKey:@"grant_type"];
-    //[mutableParameters setValue:scope forKey:@"scope"];
+    [mutableParameters setValue:scope forKey:@"scope"];
     [mutableParameters setValue:uri forKey:@"redirect_uri"];
     [mutableParameters setValue:@"code" forKey:@"response_type"];
     //[mutableParameters setValue:@"authorization_code" forKey:@"grant_type"];
@@ -96,93 +97,108 @@ static NSString * const kClientSecretString = @"";
     
     [self clearAuthorizationHeader];
     
-    NSMutableURLRequest *mutableRequest = [self requestWithMethod:@"GET" path:path parameters:parameters];
+    NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:parameters];
     
-    BOOL didOpenOtherApp = NO;
+    NSLog(@"MutableWeb :%@", request.URL);
     
-    NSLog(@"MutableWeb :%@", mutableRequest.URL);
-    
-    didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[mutableRequest.URL absoluteString]]];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    self.webView.delegate = self;
+    [self.webView loadRequest:request];
+
     
 }
 
-
-- (BOOL)handleOpenURL:(NSURL *)url{
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    NSString *html = [self.webView stringByEvaluatingJavaScriptFromString:
+                      @"document.body.innerHTML"];
     
+    NSLog(@"HTML: %@", html);
     
-    NSString *query = [NSString stringWithFormat:@"%@",url];
-    if (!query) {
-        query = [url query];
-    }
+    NSString *code = [self.webView stringByEvaluatingJavaScriptFromString:
+                      @"document.getElementById('code').value"];
     
-    self.params = [self parseURLParams:query];
-    
-    NSString *code = nil;
-    
-    if ([self.params valueForKey:@""])
-        code = [self.params valueForKey:@""];
-    
-    
-    if (code)
-    {
-        
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"authorization_code",@"grant_type",
-                                code,@"code",
-                                kClientIDString, @"client_id",
-                                kClientSecretString, @"client_secret", nil];
-        
-        [self getPath:@"https://www.deviantart.com/oauth2/draft10/token" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
-            
-            NSLog(@"Response: %@", json);
-            
-            NSString *accessToken = [json objectForKey:@"access_token"];
-            NSString *refresh_token = [json objectForKey:@"refresh_token"];
-            NSString *expires = [json objectForKey:@"expires_in"];
-            
-            
-            if (accessToken)
-            {
-                self.credential = [AFOAuthCredential credentialWithOAuthToken:accessToken tokenType:nil];
-                [self.credential setRefreshToken:refresh_token expiration:[NSDate dateWithTimeIntervalSinceNow:[expires integerValue]]];
-                
-                [AFOAuthCredential storeCredential:self.credential withIdentifier:self.serviceProviderIdentifier];
-                
-                [self setAuthorizationHeaderWithCredential:self.credential];
-                
-                NSLog(@"ACCESS TOKEN: %@", self.credential.accessToken);
-                
-                //Store the accessToken on userDefaults
-                [[NSUserDefaults standardUserDefaults] setObject:self.credential.accessToken forKey:@"accessToken"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                [_loginDelegate performLoginFromHandle];
-            }
-            
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-            
-        }];
-        
-    }
-    
-    return YES;
-    
+    NSLog(@"CODE: %@", code);
 }
 
-- (NSDictionary*)parseURLParams:(NSString *)query {
-	NSArray *pairs = [query componentsSeparatedByString:@"&"];
-	NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-	for (NSString *pair in pairs) {
-		NSArray *kv = [pair componentsSeparatedByString:@"="];
-		NSString *val = [[kv objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-		[params setObject:val forKey:[kv objectAtIndex:0]];
-	}
-    return params;
-}
+
+//- (BOOL)handleOpenURL:(NSURL *)url{
+//    
+//    
+//    NSString *query = [NSString stringWithFormat:@"%@",url];
+//    if (!query) {
+//        query = [url query];
+//    }
+//    
+//    self.params = [self parseURLParams:query];
+//    
+//    NSString *code = nil;
+//    
+//    if ([self.params valueForKey:@""])
+//        code = [self.params valueForKey:@""];
+//    
+//    
+//    NSLog(@"query: %@", query);
+//    
+//    if (code)
+//    {
+//        
+//        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"authorization_code",@"grant_type",
+//                                code,@"code",
+//                                kClientIDString, @"client_id",
+//                                kClientSecretString, @"client_secret", nil];
+//        
+//        [self getPath:@"https://www.deviantart.com/oauth2/draft10/token" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            
+//            
+//            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+//            
+//            NSLog(@"Response: %@", json);
+//            
+//            NSString *accessToken = [json objectForKey:@"access_token"];
+//            NSString *refresh_token = [json objectForKey:@"refresh_token"];
+//            NSString *expires = [json objectForKey:@"expires_in"];
+//            
+//            
+//            if (accessToken)
+//            {
+//                self.credential = [AFOAuthCredential credentialWithOAuthToken:accessToken tokenType:nil];
+//                [self.credential setRefreshToken:refresh_token expiration:[NSDate dateWithTimeIntervalSinceNow:[expires integerValue]]];
+//                
+//                [AFOAuthCredential storeCredential:self.credential withIdentifier:self.serviceProviderIdentifier];
+//                
+//                [self setAuthorizationHeaderWithCredential:self.credential];
+//                
+//                NSLog(@"ACCESS TOKEN: %@", self.credential.accessToken);
+//                
+//                //Store the accessToken on userDefaults
+//                [[NSUserDefaults standardUserDefaults] setObject:self.credential.accessToken forKey:@"accessToken"];
+//                [[NSUserDefaults standardUserDefaults] synchronize];
+//                
+//                [_loginDelegate performLoginFromHandle];
+//            }
+//            
+//            
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            
+//            
+//        }];
+//        
+//    }
+//    
+//    return YES;
+//    
+//}
+//
+//- (NSDictionary*)parseURLParams:(NSString *)query {
+//	NSArray *pairs = [query componentsSeparatedByString:@"&"];
+//	NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+//	for (NSString *pair in pairs) {
+//		NSArray *kv = [pair componentsSeparatedByString:@"="];
+//		NSString *val = [[kv objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//        
+//		[params setObject:val forKey:[kv objectAtIndex:0]];
+//	}
+//    return params;
+//}
 
 @end
