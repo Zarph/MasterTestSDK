@@ -34,11 +34,12 @@
 -(void)performLoginFromHandle;
 @end
 
-@interface RMOrkutSDK : AFOAuth2Client
+@interface RMOrkutSDK : AFOAuth2Client <UIWebViewDelegate>
 
 @property (nonatomic, retain) NSDictionary *params;
 @property (nonatomic, retain) AFOAuthCredential *credential;
 @property (nonatomic, strong) NSObject <OrkutDelegate> *loginDelegate;
+@property (nonatomic, strong) UIWebView *webView;
 
 + (RMOrkutSDK *)sharedClient;
 -(void)authenticate;

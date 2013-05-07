@@ -44,7 +44,12 @@
     //[[RMMasterSDK GooglePlusSDK] getCommentsListWithActivityId:@"z13pcl2r0lidhpcid04cdpjqtv3lznixdd0" AndParameters:nil AndWithDelegate:nil];
     //[[RMMasterSDK GooglePlusSDK] getCommentWithCommentId:@"z13pcl2r0lidhpcid04cdpjqtv3lznixdd0.1316111505324000" AndWithDelegate:nil];
     
-    [[RMMasterSDK DeviantArtSDK] authenticate];
+//    UIWebView *wv = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    
+    
+    
+    [[RMMasterSDK OrkutSDK] authenticate];
+    [self.view addSubview:[RMMasterSDK OrkutSDK].webView];
 }
 
 - (void)didReceiveMemoryWarning
