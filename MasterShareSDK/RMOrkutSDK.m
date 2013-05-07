@@ -101,7 +101,7 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
     
     NSLog(@"MutableWeb :%@", request.URL);
     
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 300, 460)];
     self.webView.delegate = self;
     [self.webView loadRequest:request];
 
@@ -118,9 +118,57 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
                       @"document.getElementById('code').value"];
     
     NSLog(@"CODE: %@", code);
+        
+    if (code.length > 0)
+    {
+        [self.webView removeFromSuperview];
+        [self makeTokenRequestWithCode:code];
+    }
 }
 
+-(void)makeTokenRequestWithCode:(NSString *)code{
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:code, @"code",
+                            kClientIDString, @"client_id",
+                            kClientSecretString, @"client_secret",
+                            @"urn:ietf:wg:oauth:2.0:oob", @"redirect_uri",
+                            @"authorization_code", @"grant_type",nil];
+    [self postPath:@"https://accounts.google.com/o/oauth2/token" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+                   NSLog(@"Response: %@", json);
+        
+                    NSString *accessToken = [json objectForKey:@"access_token"];
+                    NSString *refresh_token = [json objectForKey:@"refresh_token"];
+                    NSString *expires = [json objectForKey:@"expires_in"];
+        
+        
+                    if (accessToken)
+                    {
+                        self.credential = [AFOAuthCredential credentialWithOAuthToken:accessToken tokenType:nil];
+                        [self.credential setRefreshToken:refresh_token expiration:[NSDate dateWithTimeIntervalSinceNow:[expires integerValue]]];
 
+                        [AFOAuthCredential storeCredential:self.credential withIdentifier:self.serviceProviderIdentifier];
+        
+                        [self setAuthorizationHeaderWithCredential:self.credential];
+        
+                        NSLog(@"ACCESS TOKEN: %@", self.credential.accessToken);
+        
+                        //Store the accessToken on userDefaults
+                        [[NSUserDefaults standardUserDefaults] setObject:self.credential.accessToken forKey:@"accessToken"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                        
+                        [_loginDelegate performLoginFromHandle];
+                    }
+
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
 //- (BOOL)handleOpenURL:(NSURL *)url{
 //    
 //    

@@ -36,6 +36,7 @@
 
 @interface RMOrkutSDK : AFOAuth2Client <UIWebViewDelegate>
 
+
 @property (nonatomic, retain) NSDictionary *params;
 @property (nonatomic, retain) AFOAuthCredential *credential;
 @property (nonatomic, strong) NSObject <OrkutDelegate> *loginDelegate;
