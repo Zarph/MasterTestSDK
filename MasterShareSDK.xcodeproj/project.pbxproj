@@ -10,6 +10,7 @@
 		2820B9C917331B6900583463 /* RMLinkdedInSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 2820B9C817331B6900583463 /* RMLinkdedInSDK.m */; };
 		28F7F76C1734268500FF810A /* RMGooglePlusSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F7F76B1734268500FF810A /* RMGooglePlusSDK.m */; };
 		6D5FD293F240430FB4AD6BA2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4024170EA0D044BFA9D6305C /* libPods.a */; };
+		AA5BB59B173882C600553FCE /* RMOrkutSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5BB59A173882C600553FCE /* RMOrkutSDK.m */; };
 		AA6A321E172F0BA0002893BD /* RMFacebookSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6A321D172F0BA0002893BD /* RMFacebookSDK.m */; };
 		AA6A3221172F2129002893BD /* RMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6A3220172F2129002893BD /* RMViewController.m */; };
 		AA72E1571720B88100BBEBA4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA72E1561720B88100BBEBA4 /* UIKit.framework */; };
@@ -38,6 +39,8 @@
 		28F7F76A1734268500FF810A /* RMGooglePlusSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMGooglePlusSDK.h; sourceTree = "<group>"; };
 		28F7F76B1734268500FF810A /* RMGooglePlusSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMGooglePlusSDK.m; sourceTree = "<group>"; };
 		4024170EA0D044BFA9D6305C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA5BB599173882C600553FCE /* RMOrkutSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMOrkutSDK.h; sourceTree = "<group>"; };
+		AA5BB59A173882C600553FCE /* RMOrkutSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMOrkutSDK.m; sourceTree = "<group>"; };
 		AA6A321C172F0BA0002893BD /* RMFacebookSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMFacebookSDK.h; sourceTree = "<group>"; };
 		AA6A321D172F0BA0002893BD /* RMFacebookSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMFacebookSDK.m; sourceTree = "<group>"; };
 		AA6A321F172F2129002893BD /* RMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMViewController.h; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				28F7F76B1734268500FF810A /* RMGooglePlusSDK.m */,
 				AA905947173456E000B8FCB8 /* RMDeviantArtSDK.h */,
 				AA905948173456E000B8FCB8 /* RMDeviantArtSDK.m */,
+				AA5BB599173882C600553FCE /* RMOrkutSDK.h */,
+				AA5BB59A173882C600553FCE /* RMOrkutSDK.m */,
 				AA72E15D1720B88100BBEBA4 /* Supporting Files */,
 			);
 			path = MasterShareSDK;
@@ -265,6 +270,7 @@
 				2820B9C917331B6900583463 /* RMLinkdedInSDK.m in Sources */,
 				28F7F76C1734268500FF810A /* RMGooglePlusSDK.m in Sources */,
 				AA905949173456E000B8FCB8 /* RMDeviantArtSDK.m in Sources */,
+				AA5BB59B173882C600553FCE /* RMOrkutSDK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

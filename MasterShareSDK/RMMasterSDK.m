@@ -49,4 +49,9 @@
 +(RMDeviantArtSDK *) DeviantArtSDK{
     return [RMDeviantArtSDK sharedClient];
 }
+
++(RMOrkutSDK *) OrkutSDK{
+    return [RMOrkutSDK sharedClient];
+
+}
 @end
