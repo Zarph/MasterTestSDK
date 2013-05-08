@@ -31,17 +31,19 @@
 #import "AFOAuth2Client.h"
 
 @protocol LinkedInDelegate <NSObject>
-
+@optional
+-(void)performLoginFromHandle;
 @end
 
 
-@interface RMLinkdedInSDK : AFOAuth2Client
+@interface RMLinkdedInSDK : AFOAuth2Client<UIWebViewDelegate>
 
 @property (nonatomic, retain) NSDictionary *params;
 @property (nonatomic, retain) AFOAuthCredential *credential;
+@property (nonatomic, strong) NSObject <LinkedInDelegate> *loginDelegate;
+@property (nonatomic, strong) UIWebView *webView;
 
 + (RMLinkdedInSDK *)sharedClient;
--(void)authenticate;
-- (BOOL)handleOpenURL:(NSURL *)url;
+-(void)authenticateWithScopes:(NSString *)scopes;
 
 @end

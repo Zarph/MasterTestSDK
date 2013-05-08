@@ -29,10 +29,10 @@
 
 #import "RMLinkdedInSDK.h"
 
-static NSString * const kOAuth2BaseURLString = @"https://www.linkedin.com/uas/";
-static NSString * const kServerAPIURL = @"https://www.linkedin.com/uas/";
-static NSString * const kClientIDString = @"i1v2u6bu41lm";
-static NSString * const kClientSecretString = @"";
+static NSString * const kOAuth2BaseURLString = @"https://api.linkedin.com/uas/oauth2/";
+static NSString * const kServerAPIURL = @"https://api.linkedin.com/uas/";
+static NSString * const kClientIDString = @"i1v2u6bu41lm";//FILL IN WITH YOUR OWN API KEY
+static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";//FILL IN WITH YOUR OWN API SECRET
 
 @implementation RMLinkdedInSDK
 
@@ -56,9 +56,9 @@ static NSString * const kClientSecretString = @"";
 
 
 
--(void)authenticate {
+-(void)authenticateWithScopes:(NSString *)scopes{
     
-    [self authenticateUsingOAuthWithPath:@"oauth2/authorization" scope:nil redirectURI:@"http://x-mastersharesdk://" success:^(AFOAuthCredential *credential) {
+    [self authenticateUsingOAuthWithPath:@"authorization" scope:scopes redirectURI:@"http://roninrecruiting.com/" success:^(AFOAuthCredential *credential) {
         
         NSLog(@"SUCCESS");
         
@@ -76,14 +76,12 @@ static NSString * const kClientSecretString = @"";
                                failure:(void (^)(NSError *error))failure
 {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
-    // [mutableParameters setObject:kAFOAuthClientCredentialsGrantType forKey:@"grant_type"];
-    //[mutableParameters setValue:scope forKey:@"scope"];
+    [mutableParameters setValue:scope forKey:@"scope"];
     [mutableParameters setValue:uri forKey:@"redirect_uri"];
     [mutableParameters setValue:@"code" forKey:@"response_type"];
-    [mutableParameters setValue:@"DCWERFWF45453sdffef592" forKey:@"state"];
-   // [mutableParameters setValue:kClientIDString forKey:@"client_id"];
-
-    //[mutableParameters setValue:@"authorization_code" forKey:@"grant_type"];
+    [mutableParameters setValue:@"EWDWQXZZAGTH348qdghjku" forKey:@"state"];
+    [mutableParameters setValue:@"code" forKey:@"response_type"];
+    
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
     [self authenticateUsingOAuthWithPath:path parameters:parameters success:success failure:failure];
@@ -96,86 +94,37 @@ static NSString * const kClientSecretString = @"";
 {
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
     [mutableParameters setObject:self.clientID forKey:@"client_id"];
-    //[mutableParameters setObject:self.secret forKey:@"client_secret"];
     parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
     [self clearAuthorizationHeader];
     
-    NSMutableURLRequest *mutableRequest = [self requestWithMethod:@"GET" path:path parameters:parameters];
+    NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:parameters];
     
-    BOOL didOpenOtherApp = NO;
+    NSLog(@"MutableWeb :%@", request.URL);
     
-    NSLog(@"MutableWeb :%@", mutableRequest.URL);
-    
-    didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[mutableRequest.URL absoluteString]]];
-    
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    self.webView.delegate = self;
+    [self.webView loadRequest:request];
 }
 
-
-- (BOOL)handleOpenURL:(NSURL *)url{
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    NSString *html = [self.webView stringByEvaluatingJavaScriptFromString:
+                      @"document.body.innerHTML"];
     
-    NSString *query = [url fragment];
-    if (!query) {
-        query = [url query];
-    }
-    NSLog(@"URL FRAGMENT: %@", [url fragment]);
+    NSLog(@"HTML: %@", html);
+    NSString *currentURL = self.webView.request.mainDocumentURL.absoluteString;
+    NSLog(@"URL: %@", currentURL);
     
-    self.params = [self parseURLParams:query];
-    NSString *accessToken = [self.params valueForKey:@"access_token"];
-    
-    
-    // If the URL doesn't contain the access token, an error has occurred.
-    if (!accessToken) {
-        //NSString *error = [self.params valueForKey:@"error"];
-        
-        NSString *errorReason = [self.params valueForKey:@"error_reason"];
-        
-        //   BOOL userDidCancel = [errorReason isEqualToString:@"user_denied"];
-        //     [self igDidNotLogin:userDidCancel];
-        
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:errorReason
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Ok"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-        
-        return YES;
-    }
-    
-    NSString *refreshToken = [self.params  valueForKey:@"refresh_token"];
-    // refreshToken = refreshToken ? refreshToken : [parameters valueForKey:@"refresh_token"];
-    
-    self.credential = [AFOAuthCredential credentialWithOAuthToken:[self.params valueForKey:@"access_token"] tokenType:[self.params  valueForKey:@"token_type"]];
-    [self.credential setRefreshToken:refreshToken expiration:[NSDate dateWithTimeIntervalSinceNow:[[self.params  valueForKey:@"expires_in"] integerValue]]];
-    
-    [AFOAuthCredential storeCredential:self.credential withIdentifier:self.serviceProviderIdentifier];
-    
-    [self setAuthorizationHeaderWithCredential:self.credential];
-    
-    NSLog(@"ACCESS TOKEN: %@", self.credential.accessToken);
-    
-    //Store the accessToken on userDefaults
-    [[NSUserDefaults standardUserDefaults] setObject:self.credential.accessToken forKey:@"accessToken"];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-    
-    
-    //DELEGATE CALL
-    
-    return YES;
-    
-}
-
-- (NSDictionary*)parseURLParams:(NSString *)query {
-	NSArray *pairs = [query componentsSeparatedByString:@"&"];
-	NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-	for (NSString *pair in pairs) {
-		NSArray *kv = [pair componentsSeparatedByString:@"="];
-		NSString *val = [[kv objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-		[params setObject:val forKey:[kv objectAtIndex:0]];
-	}
-    return params;
+//    NSString *code = [self.webView stringByEvaluatingJavaScriptFromString:
+//                      @"document.getElementById('code').value"];
+//    
+//    NSLog(@"CODE: %@", code);
+//    
+//    if (code.length > 0)
+//    {
+//        [self.webView removeFromSuperview];
+//        [self makeTokenRequestWithCode:code];
+//    }
 }
 
 
