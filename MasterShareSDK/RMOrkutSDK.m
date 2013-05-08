@@ -169,84 +169,846 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     }];
 }
-//- (BOOL)handleOpenURL:(NSURL *)url{
-//    
-//    
-//    NSString *query = [NSString stringWithFormat:@"%@",url];
-//    if (!query) {
-//        query = [url query];
-//    }
-//    
-//    self.params = [self parseURLParams:query];
-//    
-//    NSString *code = nil;
-//    
-//    if ([self.params valueForKey:@""])
-//        code = [self.params valueForKey:@""];
-//    
-//    
-//    NSLog(@"query: %@", query);
-//    
-//    if (code)
-//    {
-//        
-//        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"authorization_code",@"grant_type",
-//                                code,@"code",
-//                                kClientIDString, @"client_id",
-//                                kClientSecretString, @"client_secret", nil];
-//        
-//        [self getPath:@"https://www.deviantart.com/oauth2/draft10/token" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            
-//            
-//            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
-//            
-//            NSLog(@"Response: %@", json);
-//            
-//            NSString *accessToken = [json objectForKey:@"access_token"];
-//            NSString *refresh_token = [json objectForKey:@"refresh_token"];
-//            NSString *expires = [json objectForKey:@"expires_in"];
-//            
-//            
-//            if (accessToken)
-//            {
-//                self.credential = [AFOAuthCredential credentialWithOAuthToken:accessToken tokenType:nil];
-//                [self.credential setRefreshToken:refresh_token expiration:[NSDate dateWithTimeIntervalSinceNow:[expires integerValue]]];
-//                
-//                [AFOAuthCredential storeCredential:self.credential withIdentifier:self.serviceProviderIdentifier];
-//                
-//                [self setAuthorizationHeaderWithCredential:self.credential];
-//                
-//                NSLog(@"ACCESS TOKEN: %@", self.credential.accessToken);
-//                
-//                //Store the accessToken on userDefaults
-//                [[NSUserDefaults standardUserDefaults] setObject:self.credential.accessToken forKey:@"accessToken"];
-//                [[NSUserDefaults standardUserDefaults] synchronize];
-//                
-//                [_loginDelegate performLoginFromHandle];
-//            }
-//            
-//            
-//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            
-//            
-//        }];
-//        
-//    }
-//    
-//    return YES;
-//    
-//}
-//
-//- (NSDictionary*)parseURLParams:(NSString *)query {
-//	NSArray *pairs = [query componentsSeparatedByString:@"&"];
-//	NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-//	for (NSString *pair in pairs) {
-//		NSArray *kv = [pair componentsSeparatedByString:@"="];
-//		NSString *val = [[kv objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//        
-//		[params setObject:val forKey:[kv objectAtIndex:0]];
-//	}
-//    return params;
-//}
 
+-(void)deleteAclWithActivityId:(NSString *)activityId WithUserId:(NSString *)userId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+  //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/activities/%@/acl/%@", activityId, userId];
+    
+    [self deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getActivitiesListWithCollection:(NSString *)collection WithUserId:(NSString *)userId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+      NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/people/%@/activities/%@", userId, collection];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)deleteActivityWithActivityId:(NSString *)activityId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/activities/%@", activityId];
+    
+    [self deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getActivityVisibilityWithActivityId:(NSString *)activityId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+  //  NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+   
+   // NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/activities/%@/visibility", activityId];
+    
+    [self getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)putActivityVisibilityWithActivityId:(NSString *)activityId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //  NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    // NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/activities/%@/visibility", activityId];
+    
+    
+    [self putPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)patchActivityVisibilityWithActivityId:(NSString *)activityId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //  NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    // NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/activities/%@/visibility", activityId];
+    
+    
+    [self patchPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getBadgesListWithUserId:(NSString *)userId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //  NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    // NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/people/%@/badges", userId];
+    
+    [self getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getBadgesWithUserId:(NSString *)userId WithBadgeId:(NSString *)badgeId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //  NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    // NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/people/%@/badges/%@", userId, badgeId];
+    
+    [self getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommentsListWithActivityId:(NSString *)activityId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/activities/%@/comments", activityId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommentWithCommentId:(NSString *)commentId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/comments/%@", commentId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postCommentWithActivityId:(NSString *)activityId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+//    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+   // NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+   
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/activities/%@/comments", activityId];
+    
+    [self getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)deleteCommentWithCommentId:(NSString *)commentId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+  //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/comments/%@", commentId];
+    
+    [self deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCountersListWithUserId:(NSString *)userId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+  //  NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+   // NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/people/%@/counters", userId];
+    
+    [self getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunitiesWithCommunityId:(NSString *)communityId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@", communityId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunitiesListWithUserId:(NSString *)userId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/people/%@/communities", userId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)deleteCommunityFollowWithCommunityId:(NSString *)communityId WithUserId:(NSString *)userId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/followers/%@", communityId, userId];
+    
+    [self deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postCommunityFollowWithCommunityId:(NSString *)communityId WithUserId:(NSString *)userId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/followers/%@", communityId, userId];
+    
+    [self postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)deleteCommunityMembersWithCommunityId:(NSString *)communityId WithUserId:(NSString *)userId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/members/%@", communityId, userId];
+    
+    [self deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunityMembersWithCommunityId:(NSString *)communityId WithUserId:(NSString *)userId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/members/%@", communityId, userId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postCommunityMembersWithCommunityId:(NSString *)communityId WithUserId:(NSString *)userId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/members/%@", communityId, userId];
+    
+    [self postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunityMembersListWithCommunityId:(NSString *)communityId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/members", communityId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)deleteCommunityMessagesWithCommunityId:(NSString *)communityId WithMessageId:(NSString *)messageId WithTopicId:(NSString *)topicId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/topics/%@/messages/%@", communityId, topicId, messageId];
+    
+    [self deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postCommunityMessagesWithCommunityId:(NSString *)communityId WithTopicId:(NSString *)topicId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/topics/%@/messages", communityId, topicId];
+    
+    [self postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunityMessagesListWithCommunityId:(NSString *)communityId WithTopicId:(NSString *)topicId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+      NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/topics/%@/messages", communityId, topicId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postCommunityPollCommentsWithCommunityId:(NSString *)communityId WithPollId:(NSString *)pollId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/polls/%@/comments", communityId, pollId];
+    
+    [self postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunityPollCommentListWithCommunityId:(NSString *)communityId WithPollId:(NSString *)pollId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/polls/%@/comments", communityId, pollId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postCommunityPollVotesWithCommunityId:(NSString *)communityId WithPollId:(NSString *)pollId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/polls/%@/votes", communityId, pollId];
+    
+    [self postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunityPollsWithCommunityId:(NSString *)communityId WithPollId:(NSString *)pollId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/polls/%@", communityId, pollId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunityPollsListWithCommunityId:(NSString *)communityId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/polls", communityId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunityRelatedListWithCommunityId:(NSString *)communityId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/related", communityId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)deleteCommunityTopicsWithCommunityId:(NSString *)communityId WithTopicId:(NSString *)topicId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/topics/%@", communityId, topicId];
+    
+    [self deletePath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunityTopicsWithCommunityId:(NSString *)communityId WithTopicId:(NSString *)topicId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/topics/%@", communityId, topicId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postCommunityTopicsWithCommunityId:(NSString *)communityId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/topics", communityId];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)getCommunityTopicsListWithCommunityId:(NSString *)communityId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/communities/%@/topics", communityId];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
+
+-(void)postScrapsWithDelegate:(NSObject <OrkutDelegate> *)delegate{
+    
+    //NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    //[mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+  //  NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/activities/scraps"];
+    
+    [self postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"USER Data REQUEST");
+        
+        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        
+        NSLog(@"Response object: %@", data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        
+    }];
+}
 @end
