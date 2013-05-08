@@ -48,8 +48,15 @@
     
     
     
-    [[RMMasterSDK OrkutSDK] authenticate];
-    [self.view addSubview:[RMMasterSDK OrkutSDK].webView];
+    //[[RMMasterSDK OrkutSDK] authenticate];
+    //[self.view addSubview:[RMMasterSDK OrkutSDK].webView];
+    
+    
+    //LIST OF PERMISSIONS: r_basicprofile, r_fullprofile, r_emailaddress, r_network, r_contactinfo, rw_nus, rw_groups, w_messages
+    NSString *scopes = @"r_fullprofile";
+    
+    [[RMMasterSDK LinkdedInSDK] authenticateWithScopes:scopes];
+    [self.view addSubview:[RMMasterSDK LinkdedInSDK].webView];
 }
 
 - (void)didReceiveMemoryWarning
