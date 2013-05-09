@@ -48,20 +48,20 @@
     
     
     
-   // NSString *scope = [NSString stringWithFormat:@"%@ %@", @"https://www.googleapis.com/auth/orkut", @"https://www.googleapis.com/auth/orkut.readonly"];
+    NSString *scope = [NSString stringWithFormat:@"%@ %@", @"https://www.googleapis.com/auth/orkut", @"https://www.googleapis.com/auth/orkut.readonly"];
     
-  /*  [[RMMasterSDK OrkutSDK] setLoginDelegate:self];
+    [[RMMasterSDK OrkutSDK] setLoginDelegate:self];
     [[RMMasterSDK OrkutSDK] authenticateWithScopes:scope];
     
-    [self.view addSubview:[RMMasterSDK OrkutSDK].webView];*/
+    [self.view addSubview:[RMMasterSDK OrkutSDK].webView];
     
     
     //LIST OF PERMISSIONS: r_basicprofile, r_fullprofile, r_emailaddress, r_network, r_contactinfo, rw_nus, rw_groups, w_messages
-    NSString *scopes = @"r_fullprofile";
+    /*NSString *scopes = @"r_fullprofile";
     
     [[RMMasterSDK LinkedInSDK] setLoginDelegate:self];
     [[RMMasterSDK LinkedInSDK] authenticateWithScopes:scopes];
-    [self.view addSubview:[RMMasterSDK LinkedInSDK].webView];
+    [self.view addSubview:[RMMasterSDK LinkedInSDK].webView];*/
 
 }
 
@@ -75,7 +75,19 @@
     
     NSLog(@"ACESS");
     
-    [[RMMasterSDK OrkutSDK] getActivitiesListWithCollection:@"stream" WithUserId:@"me" WithParameters:nil AndWithDelegate:nil];
+   // [[RMMasterSDK OrkutSDK] deleteActivityWithActivityId:@"GAwiGAoUCAEQo97uzgIYg_KrjAUgv_m08wQQHg" AndWithDelegate:nil];
+    
+   // [[RMMasterSDK OrkutSDK] getActivitiesListWithCollection:@"stream" WithUserId:@"me" WithParameters:nil AndWithDelegate:nil];
+    
+    //[[RMMasterSDK OrkutSDK] getActivityVisibilityWithActivityId:@"GAwiHQoZCAEQo97uzgIY3fOrjAUg3ZTXvfn_____ARAe" AndWithDelegate:nil];
+    
+   //[[RMMasterSDK OrkutSDK] putActivityVisibilityWithActivityId:@"GAwiHQoZCAEQo97uzgIY3fOrjAUg3ZTXvfn_____ARAe" AndWithDelegate:nil];
+    
+    //[[RMMasterSDK OrkutSDK] patchActivityVisibilityWithActivityId:@"GAwiHQoZCAEQo97uzgIY3fOrjAUg3ZTXvfn_____ARAe" AndWithDelegate:nil];
+
+    //[[RMMasterSDK OrkutSDK] getBadgesListWithUserId:@"me" AndWithDelegate:nil];
+    
+    //[[RMMasterSDK OrkutSDK] getCountersListWithUserId:@"me" AndWithDelegate:nil];
     
     // NSData *dataToSEnd = UIImageJPEGRepresentation([UIImage imageNamed:@"asd.png"], 0.1);
     

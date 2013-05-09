@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "RMMasterSDK.h"
 
-@interface RMViewController : UIViewController <LinkedInDelegate>
+@interface RMViewController : UIViewController <OrkutDelegate>
 
 @end

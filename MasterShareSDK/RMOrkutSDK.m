@@ -149,7 +149,6 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
                     {
                         self.credential = [AFOAuthCredential credentialWithOAuthToken:accessToken tokenType:nil];
                         [self.credential setRefreshToken:refresh_token expiration:[NSDate dateWithTimeIntervalSinceNow:[expires integerValue]]];
-
                         [AFOAuthCredential storeCredential:self.credential withIdentifier:self.serviceProviderIdentifier];
         
                         [self setAuthorizationHeaderWithCredential:self.credential];
@@ -232,14 +231,11 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
         NSLog(@"USER Data REQUEST");
         
-        NSDictionary *data = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
-        
-        NSLog(@"Response object: %@", data);
-        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -263,7 +259,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -271,6 +268,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
     
       NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
     [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
+    
+    
     
      NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
@@ -288,7 +287,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -296,7 +296,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
     
       NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
     [mutableParameters setValue:self.credential.accessToken forKey:@"access_token"];
-    
+    [mutableParameters setValue:kClientIDString forKey:@"key"];
+
      NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
     NSString *path =  [NSString stringWithFormat:@"https://www.googleapis.com/orkut/v2/activities/%@/visibility", activityId];
@@ -313,7 +314,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -337,7 +339,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -361,7 +364,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -385,7 +389,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -409,7 +414,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -433,7 +439,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -457,7 +464,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -481,7 +489,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -505,7 +514,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -529,7 +539,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -553,7 +564,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -577,7 +589,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -601,7 +614,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -625,7 +639,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -649,7 +664,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -673,7 +689,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -697,7 +714,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -721,7 +739,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -745,7 +764,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -769,7 +789,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -793,7 +814,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -817,7 +839,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -841,7 +864,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -865,7 +889,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -889,7 +914,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -913,7 +939,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -937,7 +964,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -961,7 +989,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -985,7 +1014,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 
@@ -1009,7 +1039,8 @@ static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        
+        NSLog(@"Error: %@", error);
+
     }];
 }
 @end
