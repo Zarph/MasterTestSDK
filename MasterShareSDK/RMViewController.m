@@ -59,15 +59,9 @@
     //LIST OF PERMISSIONS: r_basicprofile, r_fullprofile, r_emailaddress, r_network, r_contactinfo, rw_nus, rw_groups, w_messages
   //  NSString *scopes = @"r_fullprofile";
     
-<<<<<<< HEAD
   //  [[RMMasterSDK LinkdedInSDK] authenticateWithScopes:scopes];
   //  [self.view addSubview:[RMMasterSDK LinkdedInSDK].webView];
-=======
-    [[RMMasterSDK LinkedInSDK] authenticateWithScopes:scopes];
-    [self.view addSubview:[RMMasterSDK LinkedInSDK].webView];
-    
-    
->>>>>>> origin/master
+
 }
 
 - (void)didReceiveMemoryWarning
