@@ -43,7 +43,7 @@
 @property (nonatomic, strong) UIWebView *webView;
 
 + (RMOrkutSDK *)sharedClient;
--(void)authenticate;
+-(void)authenticateWithScopes:(NSString *)scopes;
 
 -(void)deleteAclWithActivityId:(NSString *)activityId WithUserId:(NSString *)userId AndWithDelegate:(NSObject <OrkutDelegate> *)delegate;
 -(void)getActivitiesListWithCollection:(NSString *)collection WithUserId:(NSString *)userId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <OrkutDelegate> *)delegate;

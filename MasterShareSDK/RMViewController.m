@@ -48,15 +48,19 @@
     
     
     
-    //[[RMMasterSDK OrkutSDK] authenticate];
-    //[self.view addSubview:[RMMasterSDK OrkutSDK].webView];
+    NSString *scope = [NSString stringWithFormat:@"%@ %@", @"https://www.googleapis.com/auth/orkut", @"https://www.googleapis.com/auth/orkut.readonly"];
+    
+    [[RMMasterSDK OrkutSDK] setLoginDelegate:self];
+    [[RMMasterSDK OrkutSDK] authenticateWithScopes:scope];
+    
+    [self.view addSubview:[RMMasterSDK OrkutSDK].webView];
     
     
     //LIST OF PERMISSIONS: r_basicprofile, r_fullprofile, r_emailaddress, r_network, r_contactinfo, rw_nus, rw_groups, w_messages
-    NSString *scopes = @"r_fullprofile";
+  //  NSString *scopes = @"r_fullprofile";
     
-    [[RMMasterSDK LinkdedInSDK] authenticateWithScopes:scopes];
-    [self.view addSubview:[RMMasterSDK LinkdedInSDK].webView];
+  //  [[RMMasterSDK LinkdedInSDK] authenticateWithScopes:scopes];
+  //  [self.view addSubview:[RMMasterSDK LinkdedInSDK].webView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,6 +70,10 @@
 }
 
 -(void)performLoginFromHandle {
+    
+    NSLog(@"ACESS");
+    
+    [[RMMasterSDK OrkutSDK] getActivitiesListWithCollection:@"stream" WithUserId:@"me" WithParameters:nil AndWithDelegate:nil];
     
     // NSData *dataToSEnd = UIImageJPEGRepresentation([UIImage imageNamed:@"asd.png"], 0.1);
     
