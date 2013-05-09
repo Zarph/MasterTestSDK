@@ -13,7 +13,7 @@
 #import "RMYelpSDK.h"
 #import "RMTwitterSDK.h"
 #import "RMFacebookSDK.h"
-#import "RMLinkdedInSDK.h"
+#import "RMLinkedInSDK.h"
 #import "RMGooglePlusSDK.h"
 #import "RMDeviantArtSDK.h"
 #import "RMOrkutSDK.h"
@@ -26,7 +26,7 @@
 +(RMYelpSDK *) YelpSDK;
 +(RMTwitterSDK *) TwitterSDK;
 +(RMFacebookSDK *) FacebookSDK;
-+(RMLinkdedInSDK *) LinkdedInSDK;
++(RMLinkedInSDK *) LinkedInSDK;
 +(RMGooglePlusSDK *) GooglePlusSDK;
 +(RMDeviantArtSDK *) DeviantArtSDK;
 +(RMOrkutSDK *) OrkutSDK;
