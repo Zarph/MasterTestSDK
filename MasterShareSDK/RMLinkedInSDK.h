@@ -47,9 +47,15 @@
 -(void)authenticateWithScopes:(NSString *)scopes;
 
 //PEOPLE
-//PROFILE API, more info: http://developer.linkedin.com/documents/profile-api
+//Profile API, more info: http://developer.linkedin.com/documents/profile-api
 -(void)getCurrentUserProfileWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getUserProfileWithMemberId:(NSString *)memberID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getUserProfileWithProfileURL:(NSString *)profileURL AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 
+//Connections API, more info: http://developer.linkedin.com/documents/connections-api
+-(void)getCurrentUserConnectionsWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 
+//People Search API, more info: http://developer.linkedin.com/documents/people-search-api
+-(void)getPeopleSearchWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 
 @end
