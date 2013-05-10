@@ -28,9 +28,10 @@
 //    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "RMLinkedInSDK.h"
+#import "AFXMLRequestOperation.h"
 
 static NSString * const kOAuth2BaseURLString = @"https://www.linkedin.com/uas/oauth2/";
-static NSString * const kServerAPIURL = @"http://api.linkedin.com/v1/";
+static NSString * const kServerAPIURL = @"https://api.linkedin.com/v1/";
 static NSString * const kClientIDString = @"i1v2u6bu41lm";//FILL IN WITH YOUR OWN API KEY
 static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";//FILL IN WITH YOUR OWN API SECRET
 
@@ -122,13 +123,16 @@ static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";//FILL IN WITH
         NSLog(@"CSRF error.");
     }
     else {
-        NSLog(@"CODE: %@", code);
-        if (code.length > 0)
-        {
-            [self.webView removeFromSuperview];
-            [self makeTokenRequestWithCode:code];
-        }
+        
+        if (![code isEqualToString:@""]) {
+            NSLog(@"CODE: %@", code);
+            if (code.length > 0)
+            {
+                [self.webView removeFromSuperview];
+                [self makeTokenRequestWithCode:code];
+            }
 
+        }
     }
 }
 
@@ -201,8 +205,8 @@ static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";//FILL IN WITH
 }
 
 
-#pragma mark - PEOPLE
-//PROFILE API
+//PEOPLE
+//Profile API
 -(void)getCurrentUserProfileWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
     
     NSString *path = [NSString stringWithFormat:@"%@people/~", kServerAPIURL];
@@ -211,15 +215,100 @@ static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";//FILL IN WITH
     [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
-    NSLog(@"INSIDE METHOD, PATH: %@", path);
-    NSLog(@"INSIDE METHOD, PARAMETERS: %@", parameters);
-    
     [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Response object: %@", responseObject);
+        
+        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"Response XML: %@", responseString);
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 }
 
+
+-(void)getUserProfileWithMemberId:(NSString *)memberID AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@people/id=%@", kServerAPIURL, memberID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"Response XML: %@", responseString);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+
+}
+
+
+-(void)getUserProfileWithProfileURL:(NSString *)profileURL AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    static NSString * const kAFCharactersToBeEscaped = @":/?&=;+!@#$()~',*";
+    static NSString * const kAFCharactersToLeaveUnescaped = @"[].";
+    
+	NSString * escapedProfileURL = (__bridge_transfer  NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (__bridge CFStringRef)profileURL, (__bridge CFStringRef)kAFCharactersToLeaveUnescaped, (__bridge CFStringRef)kAFCharactersToBeEscaped, CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
+    
+    NSLog(@"escaped string: %@", escapedProfileURL);
+    
+    NSString *path = [NSString stringWithFormat:@"%@people/url=%@", kServerAPIURL, escapedProfileURL];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"Response XML: %@", responseString);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+//Connections API
+-(void)getCurrentUserConnectionsWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@people/~/connections", kServerAPIURL];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"Response XML: %@", responseString);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+//People Search API
+-(void)getPeopleSearchWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@people-search", kServerAPIURL];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"Response XML: %@", responseString);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
 
 @end

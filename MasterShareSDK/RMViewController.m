@@ -48,16 +48,17 @@
     
     
     
-    NSString *scope = [NSString stringWithFormat:@"%@ %@", @"https://www.googleapis.com/auth/orkut", @"https://www.googleapis.com/auth/orkut.readonly"];
-    
-    [[RMMasterSDK OrkutSDK] setLoginDelegate:self];
-    [[RMMasterSDK OrkutSDK] authenticateWithScopes:scope];
-    
-    [self.view addSubview:[RMMasterSDK OrkutSDK].webView];
+//    NSString *scope = [NSString stringWithFormat:@"%@ %@", @"https://www.googleapis.com/auth/orkut", @"https://www.googleapis.com/auth/orkut.readonly"];
+//    
+//    [[RMMasterSDK OrkutSDK] setLoginDelegate:self];
+//    [[RMMasterSDK OrkutSDK] authenticateWithScopes:scope];
+//    
+//    [self.view addSubview:[RMMasterSDK OrkutSDK].webView];
     
     
     //LIST OF PERMISSIONS: r_basicprofile, r_fullprofile, r_emailaddress, r_network, r_contactinfo, rw_nus, rw_groups, w_messages
-    /*NSString *scopes = @"r_fullprofile";
+    //TO ENTER SEVERAL PERMISSIONS AT ONCE: SEPARATE THE STRINGS WITH SPACES. For example: NSString *scopes = @"r_fullprofile r_emailaddress r_network";
+    /*NSString *scopes = @"r_basicprofile r_network";
     
     [[RMMasterSDK LinkedInSDK] setLoginDelegate:self];
     [[RMMasterSDK LinkedInSDK] authenticateWithScopes:scopes];
@@ -113,9 +114,17 @@
 
 -(void)performLinkedInLoginFromHandle {
     
-    NSLog(@"CALLED");
+    //[[RMMasterSDK LinkedInSDK] getCurrentUserProfileWithDelegate:nil];
+    //NO ANDA, CONSEGUIR MEMBERID:
+    //[[RMMasterSDK LinkedInSDK] getUserProfileWithMemberId:@"" AndWithDelegate:nil];
+    //NO ANDA, DICE QUE FALLA EL PROFILE URL:
+    //[[RMMasterSDK LinkedInSDK] getUserProfileWithProfileURL:@"" AndWithDelegate:nil];
     
-    [[RMMasterSDK LinkedInSDK] getCurrentUserProfileWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getCurrentUserConnectionsWithParameters:nil AndWithDelegate:nil];
+    
+    /*NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"Sergio", @"first-name", nil];
+    [[RMMasterSDK LinkedInSDK] getPeopleSearchWithParameters:params AndWithDelegate:nil];*/
+    
 }
 
 @end
