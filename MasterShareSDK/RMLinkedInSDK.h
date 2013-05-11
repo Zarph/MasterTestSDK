@@ -48,14 +48,33 @@
 
 //PEOPLE
 //Profile API, more info: http://developer.linkedin.com/documents/profile-api
--(void)getCurrentUserProfileWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)getUserProfileWithMemberId:(NSString *)memberID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)getUserProfileWithProfileURL:(NSString *)profileURL AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
-
+-(void)getCurrentUserProfileWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getUserProfileWithMemberId:(NSString *)memberID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getUserProfileWithProfileURL:(NSString *)profileURL WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 //Connections API, more info: http://developer.linkedin.com/documents/connections-api
--(void)getCurrentUserConnectionsWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
-
+-(void)getCurrentUserConnectionsWithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 //People Search API, more info: http://developer.linkedin.com/documents/people-search-api
--(void)getPeopleSearchWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getPeopleSearchWithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+
+//GROUPS
+//Groups API, more info: http://developer.linkedin.com/documents/groups-api
+-(void)getGroupProfileDetailsWithGroupId:(NSString *)groupID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getCurrentUserGroupMembershipsWithFieldSelectors:(NSString *)fieldSelectors WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getCurrentUserShowGroupSettingsWithGroupId:(NSString *)groupID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)putJoinGroupWithGroupId:(NSString *)groupID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)deleteLeaveGroupWithGroupId:(NSString *)groupID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getGroupPostsWithGroupId:(NSString *)groupID WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getCurrentUserGroupPostsWithGroupId:(NSString *)groupID WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)postCreateDiscussionPostInGroupWithGroupId:(NSString *)groupID WithBody:(NSString *)body AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getPostDetailsWithPostId:(NSString *)postID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getPostCommentsWithPostId:(NSString *)postID WithFieldSelectors:(NSString *)fieldSelectors WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)putLikeUnlikePostWithPostId:(NSString *)postID WithIsLiked:(NSString *)isLiked AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)putFollowUnfollowPostWithPostId:(NSString *)postID WithIsFollowing:(NSString *)isFollowing AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)putFlagPostWithPostId:(NSString *)postID WithFlag:(NSString *)flag AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)deletePostOrFlagAsInappropriateWithPostId:(NSString *)postID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getCommentWithCommentId:(NSString *)commentID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)postAddCommentToPostWithPostId:(NSString *)postID WithComment:(NSString *)comment AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)deleteCommentOrFlagAsInappropriateWithCommentId:(NSString *)commentID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+
 
 @end
