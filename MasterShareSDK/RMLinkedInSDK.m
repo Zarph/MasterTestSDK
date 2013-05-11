@@ -28,11 +28,12 @@
 //    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "RMLinkedInSDK.h"
+#import "AFXMLRequestOperation.h"
 
 static NSString * const kOAuth2BaseURLString = @"https://www.linkedin.com/uas/oauth2/";
-static NSString * const kServerAPIURL = @"http://api.linkedin.com/v1/";
+static NSString * const kServerAPIURL = @"https://api.linkedin.com/v1/";
 static NSString * const kClientIDString = @"i1v2u6bu41lm";//FILL IN WITH YOUR OWN API KEY
-static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";//FILL IN WITH YOUR OWN API SECRET
+static NSString * const kClientSecretString = @"";//FILL IN WITH YOUR OWN API SECRET
 
 @implementation RMLinkedInSDK
 @synthesize params = _params;
@@ -122,13 +123,16 @@ static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";//FILL IN WITH
         NSLog(@"CSRF error.");
     }
     else {
-        NSLog(@"CODE: %@", code);
-        if (code.length > 0)
-        {
-            [self.webView removeFromSuperview];
-            [self makeTokenRequestWithCode:code];
-        }
+        
+        if (![code isEqualToString:@""]) {
+            NSLog(@"CODE: %@", code);
+            if (code.length > 0)
+            {
+                [self.webView removeFromSuperview];
+                [self makeTokenRequestWithCode:code];
+            }
 
+        }
     }
 }
 
@@ -201,25 +205,528 @@ static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";//FILL IN WITH
 }
 
 
-#pragma mark - PEOPLE
-//PROFILE API
--(void)getCurrentUserProfileWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+//PEOPLE
+//Profile API
+-(void)getCurrentUserProfileWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
     
-    NSString *path = [NSString stringWithFormat:@"%@people/~", kServerAPIURL];
+    NSString *path;
+    
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people/~%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people/~", kServerAPIURL];
+    }
     
     NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
     [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
-    NSLog(@"INSIDE METHOD, PATH: %@", path);
-    NSLog(@"INSIDE METHOD, PARAMETERS: %@", parameters);
-    
     [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Response object: %@", responseObject);
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 }
 
+
+-(void)getUserProfileWithMemberId:(NSString *)memberID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate{
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people/~%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people/~", kServerAPIURL];
+    }
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+
+}
+
+
+-(void)getUserProfileWithProfileURL:(NSString *)profileURL WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    static NSString * const kAFCharactersToBeEscaped = @":/?&=;+!@#$()~',*";
+    static NSString * const kAFCharactersToLeaveUnescaped = @"[].";
+    
+	NSString * escapedProfileURL = (__bridge_transfer  NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (__bridge CFStringRef)profileURL, (__bridge CFStringRef)kAFCharactersToLeaveUnescaped, (__bridge CFStringRef)kAFCharactersToBeEscaped, CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
+    
+    NSLog(@"escaped string: %@", escapedProfileURL);
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people/~%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people/~", kServerAPIURL];
+    }
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+//Connections API
+-(void)getCurrentUserConnectionsWithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people/~/connections%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people/~/connections", kServerAPIURL];
+    }
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+//People Search API
+-(void)getPeopleSearchWithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people-search%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people-search", kServerAPIURL];
+    }
+
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+//GROUPS
+//Groups API
+-(void)getGroupProfileDetailsWithGroupId:(NSString *)groupID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@groups/%@%@", kServerAPIURL, groupID, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@groups/%@", kServerAPIURL, groupID];
+    }
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+-(void)getCurrentUserGroupMembershipsWithFieldSelectors:(NSString *)fieldSelectors WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people/~/group-memberships%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people/~/group-memberships", kServerAPIURL];
+    }
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+
+}
+
+
+-(void)getCurrentUserShowGroupSettingsWithGroupId:(NSString *)groupID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people/~/group-memberships/%@%@", kServerAPIURL, groupID, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people/~/group-memberships/%@", kServerAPIURL, groupID];
+    }
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+
+}
+
+#warning terminar y probar
+-(void)putJoinGroupWithGroupId:(NSString *)groupID AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@people/~/group-memberships/%@", kServerAPIURL, groupID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self putPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+
+    }];
+
+}
+
+#warning terminar y probar
+-(void)deleteLeaveGroupWithGroupId:(NSString *)groupID AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    NSString *path = [NSString stringWithFormat:@"%@people/~/group-memberships/%@", kServerAPIURL, groupID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self deletePath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+
+-(void)getGroupPostsWithGroupId:(NSString *)groupID WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@groups/%@/posts%@", kServerAPIURL, groupID, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@groups/%@/posts", kServerAPIURL, groupID];
+    }
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+
+}
+
+
+-(void)getCurrentUserGroupPostsWithGroupId:(NSString *)groupID WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people/~/group-memberships/%@/posts%@", kServerAPIURL, groupID, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people/~/group-memberships/%@/posts", kServerAPIURL, groupID];
+    }
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+#warning terminar y probar
+-(void)postCreateDiscussionPostInGroupWithGroupId:(NSString *)groupID WithBody:(NSString *)body AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+}
+
+
+-(void)getPostDetailsWithPostId:(NSString *)postID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@posts/%@%@", kServerAPIURL, postID, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@posts/%@", kServerAPIURL, postID];
+    }
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+
+}
+
+
+-(void)getPostCommentsWithPostId:(NSString *)postID WithFieldSelectors:(NSString *)fieldSelectors WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@posts/%@/comments%@", kServerAPIURL, postID, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@posts/%@/comments", kServerAPIURL, postID];
+    }
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+#warning terminar y probar
+-(void)putLikeUnlikePostWithPostId:(NSString *)postID WithIsLiked:(NSString *)isLiked AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@posts/%@/relation-to-viewer/is-liked", kServerAPIURL, postID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self putPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+#warning terminar y probar
+-(void)putFollowUnfollowPostWithPostId:(NSString *)postID WithIsFollowing:(NSString *)isFollowing AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@posts/%@/relation-to-viewer/is-following", kServerAPIURL, postID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self putPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+#warning terminar y probar
+-(void)putFlagPostWithPostId:(NSString *)postID WithFlag:(NSString *)flag AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@posts/%@/category/code", kServerAPIURL, postID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self putPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+#warning terminar y probar
+-(void)deletePostOrFlagAsInappropriateWithPostId:(NSString *)postID AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@posts/%@", kServerAPIURL, postID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self deletePath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+}
+
+-(void)getCommentWithCommentId:(NSString *)commentID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@comments/%@%@", kServerAPIURL, commentID, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@comments/%@", kServerAPIURL, commentID];
+    }
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+}
+
+#warning terminar y probar
+-(void)postAddCommentToPostWithPostId:(NSString *)postID WithComment:(NSString *)comment AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@posts/%@/comments", kServerAPIURL, postID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+#warning terminar y probar
+-(void)deleteCommentOrFlagAsInappropriateWithCommentId:(NSString *)commentID AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@comments/%@", kServerAPIURL, commentID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self deletePath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
 
 @end
