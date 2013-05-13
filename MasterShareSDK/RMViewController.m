@@ -81,13 +81,15 @@
     
     //[[RMMasterSDK OrkutSDK] getActivityVisibilityWithActivityId:@"GAwiHQoZCAEQo97uzgIY3fOrjAUg3ZTXvfn_____ARAe" AndWithDelegate:nil];
     
-   //[[RMMasterSDK OrkutSDK] putActivityVisibilityWithActivityId:@"GAwiHQoZCAEQo97uzgIY3fOrjAUg3ZTXvfn_____ARAe" AndWithDelegate:nil];
+  // [[RMMasterSDK OrkutSDK] putActivityVisibilityWithActivityId:@"GAwiHQoZCAEQo97uzgIY3fOrjAUg3ZTXvfn_____ARAe" WithParameters:[NSDictionary dictionaryWithObjectsAndKeys:@"hidden", @"visibility", nil] AndWithDelegate:nil];
     
-    //[[RMMasterSDK OrkutSDK] patchActivityVisibilityWithActivityId:@"GAwiHQoZCAEQo97uzgIY3fOrjAUg3ZTXvfn_____ARAe" AndWithDelegate:nil];
+   // [[RMMasterSDK OrkutSDK] patchActivityVisibilityWithActivityId:@"GAwiHQoZCAEQo97uzgIY3fOrjAUg3ZTXvfn_____ARAe" WithParameters:[NSDictionary dictionaryWithObjectsAndKeys:@"hidden", @"visibility", nil] AndWithDelegate:nil];
 
     //[[RMMasterSDK OrkutSDK] getBadgesListWithUserId:@"me" AndWithDelegate:nil];
     
     //[[RMMasterSDK OrkutSDK] getCountersListWithUserId:@"me" AndWithDelegate:nil];
+    
+   // [[RMMasterSDK OrkutSDK] postCommentWithActivityId:@"GAwiHQoZCAEQo97uzgIY3fOrjAUg3ZTXvfn_____ARAe" WithParameters:[NSDictionary dictionaryWithObjectsAndKeys:@"this is a comment", @"content", nil] AndWithDelegate:nil];
     
     // NSData *dataToSEnd = UIImageJPEGRepresentation([UIImage imageNamed:@"asd.png"], 0.1);
     
