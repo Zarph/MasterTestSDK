@@ -72,9 +72,7 @@
 }
 
 -(void)performLoginFromHandle {
-    
-    NSLog(@"ACESS");
-    
+        
    // [[RMMasterSDK OrkutSDK] deleteActivityWithActivityId:@"GAwiGAoUCAEQo97uzgIYg_KrjAUgv_m08wQQHg" AndWithDelegate:nil];
     
    // [[RMMasterSDK OrkutSDK] getActivitiesListWithCollection:@"stream" WithUserId:@"me" WithParameters:nil AndWithDelegate:nil];
