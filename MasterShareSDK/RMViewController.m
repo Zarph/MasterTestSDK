@@ -48,16 +48,17 @@
     
     
     
-    NSString *scope = [NSString stringWithFormat:@"%@ %@", @"https://www.googleapis.com/auth/orkut", @"https://www.googleapis.com/auth/orkut.readonly"];
-    
-    [[RMMasterSDK OrkutSDK] setLoginDelegate:self];
-    [[RMMasterSDK OrkutSDK] authenticateWithScopes:scope];
-    
-    [self.view addSubview:[RMMasterSDK OrkutSDK].webView];
+//    NSString *scope = [NSString stringWithFormat:@"%@ %@", @"https://www.googleapis.com/auth/orkut", @"https://www.googleapis.com/auth/orkut.readonly"];
+//    
+//    [[RMMasterSDK OrkutSDK] setLoginDelegate:self];
+//    [[RMMasterSDK OrkutSDK] authenticateWithScopes:scope];
+//    
+//    [self.view addSubview:[RMMasterSDK OrkutSDK].webView];
     
     
     //LIST OF PERMISSIONS: r_basicprofile, r_fullprofile, r_emailaddress, r_network, r_contactinfo, rw_nus, rw_groups, w_messages
-    /*NSString *scopes = @"r_fullprofile";
+    //TO ENTER SEVERAL PERMISSIONS AT ONCE: SEPARATE THE STRINGS WITH SPACES. For example: NSString *scopes = @"r_fullprofile r_emailaddress r_network";
+    /*NSString *scopes = @"r_fullprofile rw_groups";
     
     [[RMMasterSDK LinkedInSDK] setLoginDelegate:self];
     [[RMMasterSDK LinkedInSDK] authenticateWithScopes:scopes];
@@ -113,9 +114,28 @@
 
 -(void)performLinkedInLoginFromHandle {
     
-    NSLog(@"CALLED");
+    //[[RMMasterSDK LinkedInSDK] getCurrentUserProfileWithFieldSelectors:@":(first-name,last-name)" AndWithDelegate:nil];
+    //NO ANDA, CONSEGUIR MEMBERID:
+    //[[RMMasterSDK LinkedInSDK] getUserProfileWithMemberId:@"" WithFieldSelectors:nil AndWithDelegate:nil];
+    //NO ANDA, DICE QUE FALLA EL PROFILE URL:
+    //[[RMMasterSDK LinkedInSDK] getUserProfileWithProfileURL:@"" WithFieldSelectors:nil AndWithDelegate:nil];
     
-    [[RMMasterSDK LinkedInSDK] getCurrentUserProfileWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getCurrentUserConnectionsWithParameters:nil WithFieldSelectors:nil AndWithDelegate:nil];
+    
+    /*NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"Sergio", @"first-name", nil];
+    [[RMMasterSDK LinkedInSDK] getPeopleSearchWithParameters:params WithFieldSelectors:nil AndWithDelegate:nil];*/
+    
+    //[[RMMasterSDK LinkedInSDK] getGroupProfileDetailsWithGroupId:@"3954140" WithFieldSelectors:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getCurrentUserGroupMembershipsWithFieldSelectors:nil WithParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getCurrentUserShowGroupSettingsWithGroupId:@"3954140" WithFieldSelectors:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] putJoinGroupWithGroupId:@"3699196" AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] deleteLeaveGroupWithGroupId:@"3699196" AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getGroupPostsWithGroupId:@"3954140" WithParameters:nil WithFieldSelectors:nil AndWithDelegate:nil];
+    /*NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"creator", @"role", nil];
+    [[RMMasterSDK LinkedInSDK] getCurrentUserGroupPostsWithGroupId:@"3954140" WithParameters:params WithFieldSelectors:nil AndWithDelegate:nil];*/
+    //[[RMMasterSDK LinkedInSDK] getPostDetailsWithPostId:@"g-164026-S-222162265" WithFieldSelectors:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getPostCommentsWithPostId:@"g-3954140-S-235650527" WithFieldSelectors:nil WithParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getCommentWithCommentId:@"g-3954140-S-235650527-133997714" WithFieldSelectors:nil AndWithDelegate:nil];
 }
 
 @end
