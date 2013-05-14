@@ -922,4 +922,282 @@ static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";//FILL IN WITH
 
 }
 
+#pragma mark - companies get methods
+-(void)getCompanyLookupWithCompanyId:(NSString *)companyId WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@companies/%@%@", kServerAPIURL, companyId, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@companies/%@", kServerAPIURL, companyId];
+    }
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getCompanyLookupWithUniversalName:(NSString *)universalName WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    
+    path = [NSString stringWithFormat:@"%@companies/universal-name=%@", kServerAPIURL, universalName];
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getFilterCompanyLookupWithEmailDom:(NSString *)emailDomain WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    
+    path = [NSString stringWithFormat:@"%@companies", kServerAPIURL];
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    [mutableParameters setValue:emailDomain forKey:@"emain-domain"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getCompanyLookupWithUniversalName:(NSString *)universalName WithCompanyId:(NSString *)companyId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    
+    path = [NSString stringWithFormat:@"%@companies::(%@,universal-name=%@)", kServerAPIURL, companyId, universalName];
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getFilterCompanyUserIsAdministratorOfWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@companies?is-company-admin=true", kServerAPIURL];
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getCompanyUpdatesWithCompanyId:(NSString *)companyId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    
+    path = [NSString stringWithFormat:@"%@companies/%@/updates", kServerAPIURL, companyId];
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getCompanyUpdatesWithCompanyId:(NSString *)companyId WithCompanyUpdateKey:(NSString *)updateKey WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    
+    path = [NSString stringWithFormat:@"%@companies/%@/updates/key=%@/update-comments", kServerAPIURL, companyId,updateKey];
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getCompanyLikesUpdatesWithCompanyId:(NSString *)companyId WithCompanyUpdateKey:(NSString *)updateKey WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    
+    path = [NSString stringWithFormat:@"%@companies/%@/updates/key=%@/likes", kServerAPIURL, companyId,updateKey];
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getCompanySearchWithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@company-search%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@company-search",kServerAPIURL];
+    }
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getCompaniesFollowedWithWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    
+    path = [NSString stringWithFormat:@"%@people/~/following/companies", kServerAPIURL];
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getCompaniesSuggestedToFollowWithWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    
+    path = [NSString stringWithFormat:@"%@people/~/suggestions/to-follow/companies", kServerAPIURL];
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+-(void)getCompanyProductsWithProductId:(NSString *)productId WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@companies/%@/products%@", kServerAPIURL, productId, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@companies/%@/products",kServerAPIURL,productId];
+    }
+    
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
 @end
