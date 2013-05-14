@@ -75,6 +75,20 @@
 -(void)getCommentWithCommentId:(NSString *)commentID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)postAddCommentToPostWithPostId:(NSString *)postID WithComment:(NSString *)comment AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)deleteCommentOrFlagAsInappropriateWithCommentId:(NSString *)commentID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getCurrentUserSuggestedGroupsWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)deleteCurrentUserGroupSuggestionWithGroupId:(NSString *)groupID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+
+
+//JOBS
+//Job Lookup API, more info: http://developer.linkedin.com/documents/job-lookup-api-and-fields
+-(void)getJobDetailsWithJobId:(NSString *)jobID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+//Job Bookmarks, more info: http://developer.linkedin.com/documents/job-bookmarks-and-suggestions
+-(void)getCurrentUserJobBookmarksWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)postBookmarkJobWithJobId:(NSString *)jobID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)deleteJobBookmarkWithJobId:(NSString *)jobID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+-(void)getCurrentUserJobSuggestionsWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
+//Job Search API, more info: http://developer.linkedin.com/documents/job-search-api
+-(void)getSearchJobWithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 
 
 @end

@@ -136,6 +136,17 @@
     //[[RMMasterSDK LinkedInSDK] getPostDetailsWithPostId:@"g-164026-S-222162265" WithFieldSelectors:nil AndWithDelegate:nil];
     //[[RMMasterSDK LinkedInSDK] getPostCommentsWithPostId:@"g-3954140-S-235650527" WithFieldSelectors:nil WithParameters:nil AndWithDelegate:nil];
     //[[RMMasterSDK LinkedInSDK] getCommentWithCommentId:@"g-3954140-S-235650527-133997714" WithFieldSelectors:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getCurrentUserSuggestedGroupsWithFieldSelectors:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] deleteCurrentUserGroupSuggestionWithGroupId:@"4007217" AndWithDelegate:nil];
+    
+    //[[RMMasterSDK LinkedInSDK] getJobDetailsWithJobId:@"1511685" WithFieldSelectors:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getCurrentUserJobBookmarksWithFieldSelectors:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] postBookmarkJobWithJobId:@"" AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] deleteJobBookmarkWithJobId:@"" AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getCurrentUserJobSuggestionsWithFieldSelectors:nil AndWithDelegate:nil];
+    /*NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"Programmer", @"keywords", nil];
+    [[RMMasterSDK LinkedInSDK] getSearchJobWithParameters:params WithFieldSelectors:nil AndWithDelegate:nil];*/
+    
 }
 
 @end
