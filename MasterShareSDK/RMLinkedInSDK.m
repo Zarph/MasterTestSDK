@@ -33,7 +33,7 @@
 static NSString * const kOAuth2BaseURLString = @"https://www.linkedin.com/uas/oauth2/";
 static NSString * const kServerAPIURL = @"https://api.linkedin.com/v1/";
 static NSString * const kClientIDString = @"i1v2u6bu41lm";//FILL IN WITH YOUR OWN API KEY
-static NSString * const kClientSecretString = @"";//FILL IN WITH YOUR OWN API SECRET
+static NSString * const kClientSecretString = @"RhiuoIbwBqA7qflg";//FILL IN WITH YOUR OWN API SECRET
 
 @implementation RMLinkedInSDK
 @synthesize params = _params;
@@ -720,6 +720,199 @@ static NSString * const kClientSecretString = @"";//FILL IN WITH YOUR OWN API SE
     NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
     
     [self deletePath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+
+-(void)getCurrentUserSuggestedGroupsWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    NSString *path;
+    
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people/~/suggestions/groups%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people/~/suggestions/groups", kServerAPIURL];
+    }
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+}
+
+
+-(void)deleteCurrentUserGroupSuggestionWithGroupId:(NSString *)groupID AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@people/~/suggestions/groups/%@", kServerAPIURL, groupID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    self.parameterEncoding = AFJSONParameterEncoding;
+    
+    [self deletePath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"SUCCESS");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+
+//JOBS
+//Job Lookup API
+-(void)getJobDetailsWithJobId:(NSString *)jobID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@jobs/%@%@", kServerAPIURL, jobID, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@jobs/%@", kServerAPIURL, jobID];
+    }
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+//Job Bookmarks
+-(void)getCurrentUserJobBookmarksWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    NSString *path;
+    
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people/~/job-bookmarks%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people/~/job-bookmarks", kServerAPIURL];
+    }
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+#warning terminar y probar
+-(void)postBookmarkJobWithJobId:(NSString *)jobID AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@people/~/job-bookmarks", kServerAPIURL];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self postPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+#warning terminar y probar
+-(void)deleteJobBookmarkWithJobId:(NSString *)jobID AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path = [NSString stringWithFormat:@"%@people/~/job-bookmarks/%@", kServerAPIURL, jobID];
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self deletePath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"SUCCESS");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+}
+
+
+-(void)getCurrentUserJobSuggestionsWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+    
+    NSString *path;
+    
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@people/~/suggestions/job-suggestions%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@people/~/suggestions/job-suggestions", kServerAPIURL];
+    }
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
+        NSLog(@"Response JSON: %@", json);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+    }];
+
+}
+
+
+-(void)getSearchJobWithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate {
+ 
+    NSString *path;
+    
+    if (fieldSelectors) {
+        path = [NSString stringWithFormat:@"%@job-search%@", kServerAPIURL, fieldSelectors];
+    }
+    else {
+        path = [NSString stringWithFormat:@"%@job-search", kServerAPIURL];
+    }
+    
+    NSMutableDictionary *mutableParameters = [NSMutableDictionary dictionary];
+    [mutableParameters setValue:self.credential.accessToken forKey:@"oauth2_access_token"];
+    [mutableParameters setValue:@"json" forKey:@"format"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithDictionary:mutableParameters];
+    
+    [self getPath:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseObject options:kNilOptions error:nil];
         NSLog(@"Response JSON: %@", json);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
