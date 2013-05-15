@@ -147,6 +147,11 @@
     /*NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"Programmer", @"keywords", nil];
     [[RMMasterSDK LinkedInSDK] getSearchJobWithParameters:params WithFieldSelectors:nil AndWithDelegate:nil];*/
     
+
+    //[[RMMasterSDK LinkedInSDK] postShareWithBody:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getMemberUpdatesWithParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK LinkedInSDK] getMemberStatisticsWithDelegate:nil];
+    
 }
 
 @end
