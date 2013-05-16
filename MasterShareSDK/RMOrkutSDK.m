@@ -32,8 +32,8 @@
 
 static NSString * const kOAuth2BaseURLString = @"https://accounts.google.com/o/";
 static NSString * const kServerAPIURL = @"https://accounts.google.com/o/";
-static NSString * const kClientIDString = @"753397185616-u3frsi5tm75muupdhb7srd1ha382f8dg.apps.googleusercontent.com";
-static NSString * const kClientSecretString = @"dj2YMJBtCRD9w29N8yc3qVib";
+static NSString * const kClientIDString = @"";//FILL IN WITH YOUR OWN DATA
+static NSString * const kClientSecretString = @"";//FILL IN WITH YOUR OWN DATA
 
 @implementation RMOrkutSDK
 

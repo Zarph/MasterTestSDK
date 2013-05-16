@@ -32,8 +32,8 @@
 
 static NSString * const kOAuth2BaseURLString = @"https://www.deviantart.com/oauth2/draft10/";
 static NSString * const kServerAPIURL = @"https://www.deviantart.com/api/draft10/";
-static NSString * const kClientIDString = @"";
-static NSString * const kClientSecretString = @"";
+static NSString * const kClientIDString = @"";//FILL IN WITH YOUR OWN DATA
+static NSString * const kClientSecretString = @"";//FILL IN WITH YOUR OWN DATA
 
 @implementation RMDeviantArtSDK
 
