@@ -27,6 +27,7 @@
 		AA72E1881720BB4600BBEBA4 /* RMTumblrSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E1871720BB4600BBEBA4 /* RMTumblrSDK.m */; };
 		AA72E18B1720BBC700BBEBA4 /* RMYelpSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E18A1720BBC700BBEBA4 /* RMYelpSDK.m */; };
 		AA7739AB17459B2000C8E28B /* RMLinkedInSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7739AA17459B2000C8E28B /* RMLinkedInSDK.m */; };
+		AA79358E1745A4BF002099B0 /* RMFlickrSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA79358D1745A4BF002099B0 /* RMFlickrSDK.m */; };
 		AA8C4DF117289C430095D4EA /* RMTwitterSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */; };
 		AA905949173456E000B8FCB8 /* RMDeviantArtSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA905948173456E000B8FCB8 /* RMDeviantArtSDK.m */; };
 		AAD3681B1729E6EA0019FE51 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD3681A1729E6EA0019FE51 /* Social.framework */; };
@@ -68,6 +69,8 @@
 		AA72E18A1720BBC700BBEBA4 /* RMYelpSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMYelpSDK.m; sourceTree = "<group>"; };
 		AA7739A917459B2000C8E28B /* RMLinkedInSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMLinkedInSDK.h; sourceTree = "<group>"; };
 		AA7739AA17459B2000C8E28B /* RMLinkedInSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMLinkedInSDK.m; sourceTree = "<group>"; };
+		AA79358C1745A4BF002099B0 /* RMFlickrSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMFlickrSDK.h; sourceTree = "<group>"; };
+		AA79358D1745A4BF002099B0 /* RMFlickrSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMFlickrSDK.m; sourceTree = "<group>"; };
 		AA8C4DEF17289C430095D4EA /* RMTwitterSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMTwitterSDK.h; sourceTree = "<group>"; };
 		AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMTwitterSDK.m; sourceTree = "<group>"; };
 		AA905947173456E000B8FCB8 /* RMDeviantArtSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDeviantArtSDK.h; sourceTree = "<group>"; };
@@ -154,6 +157,8 @@
 				AA5BB59A173882C600553FCE /* RMOrkutSDK.m */,
 				AA7739A917459B2000C8E28B /* RMLinkedInSDK.h */,
 				AA7739AA17459B2000C8E28B /* RMLinkedInSDK.m */,
+				AA79358C1745A4BF002099B0 /* RMFlickrSDK.h */,
+				AA79358D1745A4BF002099B0 /* RMFlickrSDK.m */,
 				AA72E15D1720B88100BBEBA4 /* Supporting Files */,
 			);
 			path = MasterShareSDK;
@@ -271,6 +276,7 @@
 				AA905949173456E000B8FCB8 /* RMDeviantArtSDK.m in Sources */,
 				AA5BB59B173882C600553FCE /* RMOrkutSDK.m in Sources */,
 				AA7739AB17459B2000C8E28B /* RMLinkedInSDK.m in Sources */,
+				AA79358E1745A4BF002099B0 /* RMFlickrSDK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
