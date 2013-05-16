@@ -8,6 +8,11 @@
 
 #import "AFOAuth1Client.h"
 
+@protocol FlickrDelegate <NSObject>
+@optional
+
+@end
+
 @interface RMFlickrSDK : AFOAuth1Client
 
 + (RMFlickrSDK *)sharedClient;
