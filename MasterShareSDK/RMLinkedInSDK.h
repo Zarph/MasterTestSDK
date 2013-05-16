@@ -104,4 +104,26 @@
 -(void)getCompaniesSuggestedToFollowWithWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
 -(void)getCompanyProductsWithProductId:(NSString *)productId WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
 
+//SHARE AND SOCIAL STREAM
+//Share API, more info: http://developer.linkedin.com/documents/share-api
+//"Body" is the XML body of the request: 
+-(void)postShareWithBody:(NSString *)body AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+//Network Updates And Statistics API, more info: http://developer.linkedin.com/documents/get-network-updates-and-statistics-api
+-(void)getMemberUpdatesWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+-(void)getMemberStatisticsWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+//Get More/Add Comments & Likes, more info: http://developer.linkedin.com/documents/commenting-reading-comments-and-likes-network-updates
+-(void)getMoreCommentsOfNetworkUpdateWithKey:(NSString *)key AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+-(void)getMoreLikesOfNetworkUpdateWithKey:(NSString *)key AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+-(void)postAddCommentToNetworkUpdateWithKey:(NSString *)key WithComment:(NSString *)comment AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+-(void)postLikeUnlikeNetworkUpdateWithKey:(NSString *)key WithIsLiked:(NSString *)isLiked AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+//Post Network Update, more info: http://developer.linkedin.com/documents/post-network-update
+-(void)postCreateNetworkUpdatePostWithBody:(NSString *)body AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+
+//COMMUNICATIONS
+//Invitation API, more info: http://developer.linkedin.com/documents/invitation-api
+-(void)postCreateInvitationWithBody:(NSString *)body AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+//Messaging Between Connections API, more info: http://developer.linkedin.com/documents/messaging-between-connections-api
+-(void)postCreateMessageWithBody:(NSString *)body AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+
+
 @end
