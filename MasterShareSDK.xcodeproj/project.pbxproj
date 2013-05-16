@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2820B9C917331B6900583463 /* RMLinkedInSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 2820B9C817331B6900583463 /* RMLinkedInSDK.m */; };
 		28F7F76C1734268500FF810A /* RMGooglePlusSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F7F76B1734268500FF810A /* RMGooglePlusSDK.m */; };
 		6D5FD293F240430FB4AD6BA2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4024170EA0D044BFA9D6305C /* libPods.a */; };
 		AA5BB59B173882C600553FCE /* RMOrkutSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5BB59A173882C600553FCE /* RMOrkutSDK.m */; };
@@ -27,6 +26,7 @@
 		AA72E1851720BAFC00BBEBA4 /* RMMasterSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E1841720BAFC00BBEBA4 /* RMMasterSDK.m */; };
 		AA72E1881720BB4600BBEBA4 /* RMTumblrSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E1871720BB4600BBEBA4 /* RMTumblrSDK.m */; };
 		AA72E18B1720BBC700BBEBA4 /* RMYelpSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA72E18A1720BBC700BBEBA4 /* RMYelpSDK.m */; };
+		AA7739AB17459B2000C8E28B /* RMLinkedInSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA7739AA17459B2000C8E28B /* RMLinkedInSDK.m */; };
 		AA8C4DF117289C430095D4EA /* RMTwitterSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */; };
 		AA905949173456E000B8FCB8 /* RMDeviantArtSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = AA905948173456E000B8FCB8 /* RMDeviantArtSDK.m */; };
 		AAD3681B1729E6EA0019FE51 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAD3681A1729E6EA0019FE51 /* Social.framework */; };
@@ -34,8 +34,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2820B9C717331B6900583463 /* RMLinkedInSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMLinkedInSDK.h; sourceTree = "<group>"; };
-		2820B9C817331B6900583463 /* RMLinkedInSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMLinkedInSDK.m; sourceTree = "<group>"; };
 		28F7F76A1734268500FF810A /* RMGooglePlusSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMGooglePlusSDK.h; sourceTree = "<group>"; };
 		28F7F76B1734268500FF810A /* RMGooglePlusSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMGooglePlusSDK.m; sourceTree = "<group>"; };
 		4024170EA0D044BFA9D6305C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +66,8 @@
 		AA72E1871720BB4600BBEBA4 /* RMTumblrSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMTumblrSDK.m; sourceTree = "<group>"; };
 		AA72E1891720BBC600BBEBA4 /* RMYelpSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMYelpSDK.h; sourceTree = "<group>"; };
 		AA72E18A1720BBC700BBEBA4 /* RMYelpSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMYelpSDK.m; sourceTree = "<group>"; };
+		AA7739A917459B2000C8E28B /* RMLinkedInSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMLinkedInSDK.h; sourceTree = "<group>"; };
+		AA7739AA17459B2000C8E28B /* RMLinkedInSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMLinkedInSDK.m; sourceTree = "<group>"; };
 		AA8C4DEF17289C430095D4EA /* RMTwitterSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMTwitterSDK.h; sourceTree = "<group>"; };
 		AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMTwitterSDK.m; sourceTree = "<group>"; };
 		AA905947173456E000B8FCB8 /* RMDeviantArtSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDeviantArtSDK.h; sourceTree = "<group>"; };
@@ -146,14 +146,14 @@
 				AA8C4DF017289C430095D4EA /* RMTwitterSDK.m */,
 				AA6A321C172F0BA0002893BD /* RMFacebookSDK.h */,
 				AA6A321D172F0BA0002893BD /* RMFacebookSDK.m */,
-				2820B9C717331B6900583463 /* RMLinkedInSDK.h */,
-				2820B9C817331B6900583463 /* RMLinkedInSDK.m */,
 				28F7F76A1734268500FF810A /* RMGooglePlusSDK.h */,
 				28F7F76B1734268500FF810A /* RMGooglePlusSDK.m */,
 				AA905947173456E000B8FCB8 /* RMDeviantArtSDK.h */,
 				AA905948173456E000B8FCB8 /* RMDeviantArtSDK.m */,
 				AA5BB599173882C600553FCE /* RMOrkutSDK.h */,
 				AA5BB59A173882C600553FCE /* RMOrkutSDK.m */,
+				AA7739A917459B2000C8E28B /* RMLinkedInSDK.h */,
+				AA7739AA17459B2000C8E28B /* RMLinkedInSDK.m */,
 				AA72E15D1720B88100BBEBA4 /* Supporting Files */,
 			);
 			path = MasterShareSDK;
@@ -267,10 +267,10 @@
 				AA8C4DF117289C430095D4EA /* RMTwitterSDK.m in Sources */,
 				AA6A321E172F0BA0002893BD /* RMFacebookSDK.m in Sources */,
 				AA6A3221172F2129002893BD /* RMViewController.m in Sources */,
-				2820B9C917331B6900583463 /* RMLinkedInSDK.m in Sources */,
 				28F7F76C1734268500FF810A /* RMGooglePlusSDK.m in Sources */,
 				AA905949173456E000B8FCB8 /* RMDeviantArtSDK.m in Sources */,
 				AA5BB59B173882C600553FCE /* RMOrkutSDK.m in Sources */,
+				AA7739AB17459B2000C8E28B /* RMLinkedInSDK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
