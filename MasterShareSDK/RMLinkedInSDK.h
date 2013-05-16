@@ -61,47 +61,48 @@
 -(void)getGroupProfileDetailsWithGroupId:(NSString *)groupID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)getCurrentUserGroupMembershipsWithFieldSelectors:(NSString *)fieldSelectors WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)getCurrentUserShowGroupSettingsWithGroupId:(NSString *)groupID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)putJoinGroupWithGroupId:(NSString *)groupID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)deleteLeaveGroupWithGroupId:(NSString *)groupID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)getGroupPostsWithGroupId:(NSString *)groupID WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)getCurrentUserGroupPostsWithGroupId:(NSString *)groupID WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)postCreateDiscussionPostInGroupWithGroupId:(NSString *)groupID WithBody:(NSString *)body AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)getPostDetailsWithPostId:(NSString *)postID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)getPostCommentsWithPostId:(NSString *)postID WithFieldSelectors:(NSString *)fieldSelectors WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)putLikeUnlikePostWithPostId:(NSString *)postID WithIsLiked:(NSString *)isLiked AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)putFollowUnfollowPostWithPostId:(NSString *)postID WithIsFollowing:(NSString *)isFollowing AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)putFlagPostWithPostId:(NSString *)postID WithFlag:(NSString *)flag AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)deletePostOrFlagAsInappropriateWithPostId:(NSString *)postID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)getCommentWithCommentId:(NSString *)commentID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)postAddCommentToPostWithPostId:(NSString *)postID WithComment:(NSString *)comment AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)deleteCommentOrFlagAsInappropriateWithCommentId:(NSString *)commentID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)getCurrentUserSuggestedGroupsWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)deleteCurrentUserGroupSuggestionWithGroupId:(NSString *)groupID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
-
 
 //JOBS
 //Job Lookup API, more info: http://developer.linkedin.com/documents/job-lookup-api-and-fields
 -(void)getJobDetailsWithJobId:(NSString *)jobID WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
-//Job Bookmarks, more info: http://developer.linkedin.com/documents/job-bookmarks-and-suggestions
+//Job Bookmarks API, more info: http://developer.linkedin.com/documents/job-bookmarks-and-suggestions
 -(void)getCurrentUserJobBookmarksWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)postBookmarkJobWithJobId:(NSString *)jobID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
--(void)deleteJobBookmarkWithJobId:(NSString *)jobID AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 -(void)getCurrentUserJobSuggestionsWithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 //Job Search API, more info: http://developer.linkedin.com/documents/job-search-api
 -(void)getSearchJobWithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject <LinkedInDelegate> *)delegate;
 
 //COMPANIES
+//Company Lookup API, more info: http://developer.linkedin.com/documents/company-lookup-api-and-fields
 -(void)getCompanyLookupWithCompanyId:(NSString *)companyId WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
 -(void)getCompanyLookupWithUniversalName:(NSString *)universalName WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
 -(void)getFilterCompanyLookupWithEmailDom:(NSString *)emailDomain WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
 -(void)getCompanyLookupWithUniversalName:(NSString *)universalName WithCompanyId:(NSString *)companyId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
 -(void)getFilterCompanyUserIsAdministratorOfWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+//Company Shares API, more info: http://developer.linkedin.com/reading-company-shares
 -(void)getCompanyUpdatesWithCompanyId:(NSString *)companyId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
 -(void)getCompanyUpdatesWithCompanyId:(NSString *)companyId WithCompanyUpdateKey:(NSString *)updateKey WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
 -(void)getCompanyLikesUpdatesWithCompanyId:(NSString *)companyId WithCompanyUpdateKey:(NSString *)updateKey WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+//Company Search API, more info: http://developer.linkedin.com/documents/company-search
 -(void)getCompanySearchWithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+//Company Follow And Suggestions API, more info: http://developer.linkedin.com/documents/company-follow-and-suggestions
 -(void)getCompaniesFollowedWithWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
 -(void)getCompaniesSuggestedToFollowWithWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+//Company Products API, more info: http://developer.linkedin.com/documents/company-products-and-recommendations
 -(void)getCompanyProductsWithProductId:(NSString *)productId WithParameters:(NSDictionary *)params WithFieldSelectors:(NSString *)fieldSelectors AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+
+//SHARE AND SOCIAL STREAM
+//Network Updates And Statistics API, more info: http://developer.linkedin.com/documents/get-network-updates-and-statistics-api
+-(void)getMemberUpdatesWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+-(void)getMemberStatisticsWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+//Get More Comments & Likes API, more info: http://developer.linkedin.com/documents/commenting-reading-comments-and-likes-network-updates
+-(void)getMoreCommentsOfNetworkUpdateWithKey:(NSString *)key AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+-(void)getMoreLikesOfNetworkUpdateWithKey:(NSString *)key AndWithDelegate:(NSObject<LinkedInDelegate> *)delegate;
+
 
 @end
