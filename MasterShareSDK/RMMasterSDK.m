@@ -54,4 +54,9 @@
     return [RMOrkutSDK sharedClient];
 
 }
+
++(RMFlickrSDK *) FlickrSDK{
+    return [RMFlickrSDK sharedClient];
+}
+
 @end

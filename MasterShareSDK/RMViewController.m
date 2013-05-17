@@ -64,6 +64,54 @@
     [[RMMasterSDK LinkedInSDK] authenticateWithScopes:scopes];
     [self.view addSubview:[RMMasterSDK LinkedInSDK].webView];*/
 
+    
+    //FLICKR SDK TESTING:
+    //[[RMMasterSDK FlickrSDK] getBlogsServicesWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getCamerasBrandsWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getCamerasBrandModelsWithBrandId:@"canon" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getCollectionsTreeWithCollectionId:nil OrUserId:@"37607482@N03" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getCommonsInstitutionsWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getContactsPublicListWithUserId:@"37607482@N03" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getFavoritesContextWithUserId:@"66422591@N08" AndPhotoId:@"8029111564" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getFavoritesPublicPhotosListWithUserId:@"66422591@N08" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGalleriesInfoWithGalleryId:@"6065-72157617483228192" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGalleriesListForPhotoWithPhotoId:@"314988630" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGalleriesListWithUserId:@"37607482@N03" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGalleriesPhotosWithGalleryId:@"6065-72157617483228192" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGroupsInfoWithGroupId:@"34427465497@N01" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGroupsSearchWithText:@"Beer" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGroupsDiscussRepliesListWithTopicId:@"72157625038324579" AndParameters:nil AndWithDelegate:nil];
+    //PIDE AUTENTICACION APARENTEMENTE, COMPROBAR LUEGO:
+        //[[RMMasterSDK FlickrSDK] getGroupsDiscussRepliesInfoWithTopicId:@"72157625038324579" AndReplyId:@"72157625040116805" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGroupsDiscussTopicsInfoWithTopicId:@"72157625038324579" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGroupsDiscussTopicsListWithGroupId:@"46744914@N00" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGroupsPoolsContextWithGroupId:@"1448553@N24" AndPhotoId:@"8703091265" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getGroupsPoolsPhotosWithGroupId:@"1448553@N24" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getInterestingnessListWithParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getMachinetagsNamespacesWithParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getMachinetagsPairsWithParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getMachinetagsPredicatesWithParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getMachinetagsRecentValuesWithParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getMachinetagsValuesWithNamespace:@"barefoot" AndPredicate:@"baby" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPandaListWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPandaPhotosWithPandaName:@"ling ling" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPeopleFindByEmail:@"dexterm051@gmail.com" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPeopleFindByUsername:@"dexm1" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPeopleInfoWithUserId:@"37607482@N03" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPeoplePhotosOfWithUserId:@"37607482@N03" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPeoplePublicGroupsWithUserId:@"37607482@N03" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPeoplePublicPhotosWithUserId:@"37607482@N03" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPhotosAllContextWithPhotoId:@"8703091265" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPhotosContactsPublicPhotosWithUserId:@"37607482@N03" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPhotosContextWithPhotoId:@"8703091265" AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPhotosExifWithPhotoId:@"8703091265" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPhotosFavoritesWithPhotoId:@"8703091265" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPhotosInfoWithPhotoId:@"8703091265" AndParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPhotosRecentWithParameters:nil AndWithDelegate:nil];
+    //[[RMMasterSDK FlickrSDK] getPhotosSizesWithPhotoId:@"8703091265" AndWithDelegate:nil];
+    /*NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"-26.834564", @"lat", @"-65.219221", @"lon", @"20", @"radius", @"1999-05-01 12:00:00", @"min_upload_date", nil];
+    [[RMMasterSDK FlickrSDK] getPhotosSearchWithParameters:params AndWithDelegate:nil];*/
+    
 }
 
 - (void)didReceiveMemoryWarning

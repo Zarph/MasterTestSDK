@@ -17,6 +17,7 @@
 #import "RMGooglePlusSDK.h"
 #import "RMDeviantArtSDK.h"
 #import "RMOrkutSDK.h"
+#import "RMFlickrSDK.h"
 
 @interface RMMasterSDK : NSObject
 
@@ -30,5 +31,6 @@
 +(RMGooglePlusSDK *) GooglePlusSDK;
 +(RMDeviantArtSDK *) DeviantArtSDK;
 +(RMOrkutSDK *) OrkutSDK;
++(RMFlickrSDK *) FlickrSDK;
 
 @end
