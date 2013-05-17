@@ -98,8 +98,55 @@
 -(void)getPhotosRecentWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
 -(void)getPhotosSizesWithPhotoId:(NSString *)photoID AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
 -(void)getPhotosSearchWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
-
-
-
+//photos comment
+-(void)getPhotosCommentListWithPhotoId:(NSString *)photoId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//photos geo
+-(void)getPhotosGeoLocationWithPhotoId:(NSString *)photoId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//photos licenses
+-(void)getPhotosLicensesWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//photos people
+-(void)getPhotosPeopleListWithPhotoId:(NSString *)photoId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//photos upload
+-(void)getPhotosUploadCheckTicketsWithTickets:(NSString *)tickets WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//photosets
+-(void)getPhotosetsContextWithPhotoId:(NSString *)photoId WithPhotosetId:(NSString *)photosetId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+    -(void)getPhotosetsInfoWithPhotosetId:(NSString *)photosetId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+    -(void)getPhotosetsListWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+    -(void)getPhotosetsPhotosWithPhotosetId:(NSString *)photosetId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//places
+-(void)getPlacesFindWithQuery:(NSString *)query AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getPlacesByLatitude:(NSString *)latitude WithLongitude:(NSString *)longitude WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getPlacesChildrenWithPhotosPublicWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getPlacesInfoWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getPlacesInfoByURL:(NSString *)url WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getPlacesTypesWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getPlacesShapeHistoryWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getPlacesTopPlacesListWithPlaceTypeId:(NSString *)placeTypeId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getPlacesForBoudingBoxWithBBox:(NSString *)boudingBox WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getPlacesForTagsWithPlaceTypeId:(NSString *)placeTypeId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getPlacesTagsForPlaceWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//push
+    -(void)getPushTopicsWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//reflection
+-(void)getReflectionMethodInfoWithMethodName:(NSString *)methodName WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getReflectionMethodsWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//tags
+-(void)getTagsClusterPhotosWithTag:(NSString *)tag WithClusterId:(NSString *)clusterId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getTagsClusterWithTag:(NSString *)tag WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getTagsHotListWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getTagsListPhotoWithPhotoId:(NSString *)photoId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getTagsListUserWithUserId:(NSString *)userId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getTagsListUserPopularWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getTagsListUserRawWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getTagsRelatedWithTag:(NSString *)tag WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//test
+-(void)getTestEchoWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+//url
+-(void)getUrlsGroupWithGroupId:(NSString *)groupId WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getUrlsUserPhotosWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getUrlsUserProfileWithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getUrlsLookupGalleryWithURL:(NSString *)url WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getUrlsLookupGroupWithURL:(NSString *)url WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
+-(void)getUrlsLookupUserWithURL:(NSString *)url WithParameters:(NSDictionary *)params AndWithDelegate:(NSObject <FlickrDelegate> *)delegate;
 
 @end
